@@ -4,21 +4,41 @@ import CounterTestItem from "@/content/test-counter";
 import DimdLayerTestItem from "@/content/test-dimdLayer";
 import DimdLayerLegacyTestItem from "@/content/test-dimdLayerLegacy";
 
-
 const TestItem = styled.div`
     min-height: 150px;
     margin: 10px 20px 10px 20px;
     display: block;
     border: 2px solid green;
 `
+export async function getServerSideProps() {
+  const metaImageList = await new Promise((resolve) => setTimeout(() => {
+    resolve({
+      ogImage: '/asset/img/testimg5.png',
+      twitterImage: '/asset/img/testimg6.png'
+    })
+  }, 100));
 
-export default function About() {
+  return {
+    props: {
+      metaImageList,
+    },
+  };
+}
+
+
+export default function About({ metaImageList }) {
   return (
     <>
       <Head>
         <title>test page ssr</title>
         <meta name="description" content="my test by create next app" />
         <link rel="icon" href="/favicon.ico" />
+        <meta property="og:title" content="zeros-park의 test페이지 title, og:title" />
+        <meta property="og:description" content="zeros-park의 test페이지 title, og:desc" />
+        <meta property="og:image" content={metaImageList.ogImage} />
+        <meta property="twitter:title" content="zeros-park의 test페이지 title, twit:title" />
+        <meta property="twitter:description" content="zeros-park의 test페이지 title, twit:desc" />
+        <meta property="twitter:image" content={metaImageList.twitterImage} />
       </Head>
       <div>
         <TestItem>

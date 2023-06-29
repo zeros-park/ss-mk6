@@ -11,6 +11,12 @@ export default function About() {
         <title>about page csr</title>
         <meta name="description" content="my test by create next app" />
         <link rel="icon" href="/favicon.ico" />
+        <meta property="og:title" content="zeros-park의 about페이지 title, og:title" />
+        <meta property="og:description" content="zeros-park의 about페이지 title, og:desc" />
+        <meta property="og:image" content="/asset/img/testimg3.png" />
+        <meta property="twitter:title" content="zeros-park의 about페이지 title, twit:title" />
+        <meta property="twitter:description" content="zeros-park의 about페이지 title, twit:desc" />
+        <meta property="twitter:image" content="/asset/img/testimg4.png" />
       </Head>
       <Main>
         <Title>About Page</Title>
