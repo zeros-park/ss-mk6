@@ -13,8 +13,8 @@ const TestItem = styled.div`
 export async function getServerSideProps() {
   const metaImageList = await new Promise((resolve) => setTimeout(() => {
     resolve({
-      ogImage: '/asset/img/testimg5.png',
-      twitterImage: '/asset/img/testimg6.png'
+      ogImage: 'https://ss-mk5.vercel.app/asset/img/testimg5.png',
+      twitterImage: 'https://ss-mk5.vercel.app/asset/img/testimg6.png'
     })
   }, 100));
 
@@ -36,9 +36,10 @@ export default function About({ metaImageList }) {
         <meta property="og:title" content="zeros-park의 test페이지 title, og:title" />
         <meta property="og:description" content="zeros-park의 test페이지 title, og:desc" />
         <meta property="og:image" content={metaImageList.ogImage} />
-        <meta property="twitter:title" content="zeros-park의 test페이지 title, twit:title" />
-        <meta property="twitter:description" content="zeros-park의 test페이지 title, twit:desc" />
-        <meta property="twitter:image" content={metaImageList.twitterImage} />
+        <meta name="twitter:title" content="zeros-park의 test페이지 title, twit:title" />
+        <meta name="twitter:description" content="zeros-park의 test페이지 title, twit:desc" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:image" content={metaImageList.twitterImage} />
       </Head>
       <div>
         <TestItem>

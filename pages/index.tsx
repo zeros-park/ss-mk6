@@ -17,10 +17,11 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
         <meta property="og:title" content="zeros-park의 home페이지 title, og:title" />
         <meta property="og:description" content="zeros-park의 home페이지 title, og:desc" />
-        <meta property="og:image" content="/asset/img/testimg1.png" />
-        <meta property="twitter:title" content="zeros-park의 home페이지 title, twit:title" />
-        <meta property="twitter:description" content="zeros-park의 home페이지 title, twit:desc" />
-        <meta property="twitter:image" content="/asset/img/testimg2.png" />
+        <meta property="og:image" content="https://ss-mk5.vercel.app/asset/img/testimg1.png" />
+        <meta name="twitter:title" content="zeros-park의 home페이지 title, twit:title" />
+        <meta name="twitter:description" content="zeros-park의 home페이지 title, twit:desc" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:image" content="https://ss-mk5.vercel.app/asset/img/testimg2.png" />
       </Head>
       <Main>
         <Title>
