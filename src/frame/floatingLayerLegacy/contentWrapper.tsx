@@ -1,21 +1,31 @@
 import React, { useEffect, useState, useRef } from "react";
 import styled from 'styled-components';
 import { useSelector, useDispatch } from "react-redux";
-import { show, hide, close, validTypes } from '@/store/slice/dimdLayerLegacySlice'
+import { show, hide, close, validTypes, IDimdLayerStateLegacy, extendType } from '@/store/slice/dimdLayerLegacySlice'
+import { IReactFC } from "@/types/global";
+import { IRootStore } from "@/store";
 
-const isExtendWidth = (extendType) => {
-    return ['width', 'full'].indexOf(extendType) !== -1;
+const isExtendWidth = (extendType: extendType) => {
+    if (extendType === undefined) {
+        return false;
+    } else {
+        return ['width', 'full'].indexOf(extendType) !== -1;
+    }
 }
-const isExtendHeight = (extendType) => {
-    return ['height', 'full'].indexOf(extendType) !== -1;
+const isExtendHeight = (extendType: extendType) => {
+    if (extendType === undefined) {
+        return false;
+    } else {
+        return ['height', 'full'].indexOf(extendType) !== -1;
+    }
 }
-const Background = styled.div`
+const Background = styled.div<IDimdLayerStateLegacy>`
     position: fixed;
     z-index: 400;
     width: 100%;
     height: ${props => props.type.isShowContent ? '100%' : 'auto'};
 `
-const Wrapper = styled.div`
+const Wrapper = styled.div<IDimdLayerStateLegacy>`
     z-index: 450;
     position: fixed;
     top: 50%;
@@ -36,7 +46,7 @@ const Wrapper = styled.div`
                     &.on {
                         opacity: 1;
                     }
-                `) 
+                `)
                 break;
             case 'top': return (`
                     top: 0;
@@ -81,7 +91,7 @@ const Wrapper = styled.div`
         }
     }}
 `
-const WrapperHeader = styled.div`
+const WrapperHeader = styled.div<IDimdLayerStateLegacy>`
     display: flex;
     align-items: center;
     min-width: 190px;
@@ -102,14 +112,13 @@ const WrapperHeader = styled.div`
     
 `
 
-const ContentWrapper = ({children}) => {
-    const background = useRef();
-    const type = useSelector(state => state.dimdLayer.type);
+const ContentWrapper: IReactFC = ({ children }) => {
+    const background = useRef<HTMLDivElement>(null);
+    const type = useSelector((state: IRootStore) => state.dimdLayer.type);
     const dispacth = useDispatch();
     const isValidOptions = () => validTypes(type.positionType, type.extendType)
-    
 
-    const tryToHideContent = (event) => {
+    const tryToHideContent: React.MouseEventHandler<HTMLDivElement> = (event) => {
         if (background.current === event.target) {
             hideContent();
         }
@@ -117,14 +126,14 @@ const ContentWrapper = ({children}) => {
     const hideContent = () => {
         dispacth(hide());
     }
-    const destroyWrapper = (event) => {
+    const destroyWrapper: React.TransitionEventHandler<HTMLDivElement> = (event) => {
         event.stopPropagation();
 
-        if (event.target.classList.contains('off')) {
+        if (type.isShowContent === false) {
             dispacth(close());
         }
     }
-    
+
     useEffect(() => {
         if (isValidOptions() && (type.isShowContent === false)) {
             /**
@@ -135,19 +144,19 @@ const ContentWrapper = ({children}) => {
              * 하여, 렌더링을 확실하게 두가지로 나누기 위해서, setTimeout을 통해 데이터 패치를
              * 브라우저 엔진의 영역으로 이동함
              */
-            setTimeout(() => {dispacth(show())});
-        } 
+            setTimeout(() => { dispacth(show()) });
+        }
     }, [isValidOptions()]);
-    
+
     return (
-        <Background 
-            className='_bg' 
-            type={type} 
-            ref={background} 
+        <Background
+            className='_bg'
+            type={type}
+            ref={background}
             onClick={tryToHideContent}
         >
-            <Wrapper 
-                type={type} 
+            <Wrapper
+                type={type}
                 className={type.isShowContent ? 'on' : 'off'}
                 onTransitionEnd={destroyWrapper}
             >
@@ -158,7 +167,7 @@ const ContentWrapper = ({children}) => {
                             <button onClick={hideContent}>close</button>
                         </span>
                     </WrapperHeader>
-                    <hr/>
+                    <hr />
                     <div>
                         {children}
                     </div>

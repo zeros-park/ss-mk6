@@ -4,6 +4,10 @@ import CounterTestItem from "@/content/test-counter";
 import DimdLayerTestItem from "@/content/test-dimdLayer";
 import DimdLayerLegacyTestItem from "@/content/test-dimdLayerLegacy";
 
+interface mateImageList {
+  ogImage: string,
+  twitterImage: string,
+}
 const TestItem = styled.div`
     min-height: 150px;
     margin: 10px 20px 10px 20px;
@@ -11,7 +15,7 @@ const TestItem = styled.div`
     border: 2px solid green;
 `
 export async function getServerSideProps() {
-  const metaImageList = await new Promise((resolve) => setTimeout(() => {
+  const metaImageList: mateImageList = await new Promise((resolve) => setTimeout(() => {
     resolve({
       ogImage: 'https://ss-mk5.vercel.app/asset/img/testimg5.png',
       twitterImage: 'https://ss-mk5.vercel.app/asset/img/testimg6.png'
@@ -25,8 +29,9 @@ export async function getServerSideProps() {
   };
 }
 
-
-export default function About({ metaImageList }) {
+const Test: React.FC<{
+  metaImageList: mateImageList
+}> = ({ metaImageList }) => {
   return (
     <>
       <Head>
@@ -64,3 +69,4 @@ export default function About({ metaImageList }) {
     </>
   )
 }
+export default Test;

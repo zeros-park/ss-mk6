@@ -1,7 +1,10 @@
 import React from "react";
 import styled from 'styled-components';
-
-const Wrapper = styled.div`
+import { ITSXLayoutProps, IStyledLayoutProps } from '@/types/global';
+////////////////////////////
+// Style
+////////////////////////////
+const Wrapper = styled.div<IStyledLayoutProps>`
     ${props => `
         background-color: green;
         position: absolute;
@@ -30,13 +33,17 @@ const AsideSVG = styled.svg`
     vertical-align: middle;
 `
 
-const clickLogo = (el) => {
-    console.log(el);
-    alert('oops aside!!')
-}
-const Logo = ({ layoutOptions }) => {
+////////////////////////////
+// TSX
+////////////////////////////
+const Logo: React.FC<ITSXLayoutProps> = ({ layout }) => {
+    const clickLogo: React.MouseEventHandler<HTMLButtonElement> = (el) => {
+        console.log(el);
+        alert('oops aside!!')
+    }
+
     return (
-        <Wrapper className="_logo" layout={layoutOptions}>
+        <Wrapper className="_logo" layout={layout}>
             <Content>
                 <button onClick={clickLogo}>
                     <AsideSVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">

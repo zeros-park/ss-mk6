@@ -6,17 +6,22 @@ const YScrollFlexWrapper = styled.section`
     display: flex;
     flex-direction: column;
 `
-const YScrolledContent = styled.div`
+const YScrolledContent = styled.div<{
+    height: number
+}>`
     ${props => (`
-        margin-top: ${props.margin_top}px;
+        margin-top: ${props.height}px;
         overflow-y: auto;
     `)}   
 `
 
-const YScrollWrapper = ({marginTop = 0, children}) => {
+const YScrollWrapper: React.FC<{
+    marginTop: number,
+    children: React.ReactNode
+}> = ({ marginTop = 0, children }) => {
     return (
         <YScrollFlexWrapper className="_ysfw">
-            <YScrolledContent margin_top={marginTop}> 
+            <YScrolledContent height={marginTop}>
                 {children}
             </YScrolledContent>
         </YScrollFlexWrapper>

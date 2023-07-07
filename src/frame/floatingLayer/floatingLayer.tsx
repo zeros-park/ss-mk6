@@ -1,24 +1,40 @@
-import React, { useState, useRef, useEffect } from "react";
+import { IReactFC } from "@/types/global";
+import React, { useState, useRef, useEffect, ReactEventHandler } from "react";
 import styled from 'styled-components';
-/**
- * todo : 추후 ts로 변경하면 사라질 방식임
- */
-const validPositionType = (positionType) => {
-    return ['center', 'left', 'right', 'bottom', 'top']
-    .indexOf(positionType) !== -1;
-}
-/**
- * todo : 추후 ts로 변경하면 사라질 방식임
- */
-const validExtendType = (extendType) => {
-    return ['width', 'height', 'full', 'default']
-    .indexOf(extendType) !== -1;
-}
-const validTypes = (positionType, extendType) => {
-    return validPositionType(positionType) && validExtendType(extendType);
-}
 
-const Dimd = styled.div`
+// /**
+//  * todo : 추후 ts로 변경하면 사라질 방식임
+//  */
+// const validPositionType = (positionType: positionType) => {
+//     return ['center', 'left', 'right', 'bottom', 'top']
+//     .indexOf(positionType) !== -1;
+// }
+// /**
+//  * todo : 추후 ts로 변경하면 사라질 방식임
+//  */
+// const validExtendType = (extendType) => {
+//     return ['width', 'height', 'full', 'default']
+//     .indexOf(extendType) !== -1;
+// }
+// const validTypes = (positionType, extendType) => {
+//     return validPositionType(positionType) && validExtendType(extendType);
+// }
+type positionType = 'center' | 'left' | 'right' | 'bottom' | 'top' | undefined;
+type extendType = 'width' | 'height' | 'full' | 'default' | undefined;
+interface IDimdStyled {
+    options: {
+        isShowDimd?: boolean,
+        isRequestShow?: boolean,
+        isShowContent?: boolean,
+        extendType?: extendType,
+        positionType?: positionType,
+    }
+}
+export type IDimdOptions = [positionType, extendType, boolean, string]
+const validTypes = (positionType: positionType, extendType: extendType) => {
+    return (positionType !== undefined) && (extendType !== undefined)
+}
+const Dimd = styled.div<IDimdStyled>`
     position: fixed;
     top: 0;
     left: 0;
@@ -44,7 +60,7 @@ const Dimd = styled.div`
         opacity: 1;
     }
 `
-const Wrapper = styled.div`
+const Wrapper = styled.div<IDimdStyled>`
     z-index: 450;
     position: fixed;
     display: flex;
@@ -150,7 +166,7 @@ const Wrapper = styled.div`
         }
     }}
 `
-const Content = styled.div`
+const Content = styled.div<IDimdStyled>`
     background-color: white;
     width: ${props => (props.options.extendType === 'full' ? '100%' : 'auto')};
     height: ${props => (props.options.extendType === 'full' ? '100%' : 'auto')};
@@ -197,7 +213,7 @@ const Content = styled.div`
             return ('')
         }
 
-        
+
     }}
 
 `
@@ -206,7 +222,7 @@ const Layer = styled.div`
     background-color: white;
 
 `
-const WrapperHeader = styled.div`
+const WrapperHeader = styled.div<IDimdStyled>`
     display: flex;
     align-items: center;
     min-width: 190px;
@@ -227,32 +243,36 @@ const WrapperHeader = styled.div`
 `
 const HideElementForFocusControll = styled.a``
 
-const FloatingLayer = ({fireClose, options, children}) => {
-    const background = useRef();
-    const closeBtn = useRef();
-    const content = useRef();
+const FloatingLayer: IReactFC<{
+    fireClose: () => void,
+    options: IDimdOptions,
+}> = ({ fireClose, options, children }) => {
+    const background = useRef<HTMLDivElement>(null);
+    const closeBtn = useRef<HTMLButtonElement>(null);
+    const content = useRef<HTMLDivElement>(null);
     const [isShowContent, setIsShowContent] = useState(false);
     const [positionType, extendType, isShowDimd, headerText] = options;
 
     const isValidOptions = () => validTypes(positionType, extendType)
     const requestHide = () => setIsShowContent(false)
 
-    const tryToHideContent = (event) => {
+    const tryToHideContent: React.MouseEventHandler<HTMLDivElement> = (event) => {
         if (background.current === event.target) {
             requestHide();
         }
     }
-    const rollbackFocus = () => {
-        closeBtn.current.focus();
+    const rollbackFocus: React.FocusEventHandler<HTMLAnchorElement> = () => {
+        closeBtn.current && closeBtn.current.focus();
     }
-    const destroyWrapper = (event) => {
+    const destroyWrapper: React.TransitionEventHandler<HTMLDivElement> = (event) => {
         event.stopPropagation();
 
-        if (event.target.classList.contains('off')) {
+        if (isShowContent === false) {
+            // if (event.target.classList.contains('off')) {
             fireClose();
         }
     }
-    
+
     useEffect(() => {
         if (isValidOptions() && (isShowContent === false)) {
             /**
@@ -268,44 +288,44 @@ const FloatingLayer = ({fireClose, options, children}) => {
              */
             // setTimeout(() => {dispacth(show())});
             setIsShowContent(true);
-        } 
+        }
     }, [isValidOptions()]);
 
     return (
-        <Dimd 
+        <Dimd
             className={isShowContent ? 'on' : 'off'}
-            options={{isShowDimd, isShowContent}}
+            options={{ isShowDimd, isShowContent }}
         >
-            <Wrapper 
+            <Wrapper
                 ref={background}
-                options={{positionType, extendType}}
+                options={{ positionType, extendType }}
                 onClick={tryToHideContent}
             >
-                <Content 
-                    ref={content}  
+                <Content
+                    ref={content}
                     className={isShowContent ? 'on' : 'off'}
-                    options={{positionType, extendType}}
+                    options={{ positionType, extendType }}
                     onTransitionEnd={destroyWrapper}
                 >
                     <Layer>
-                        <WrapperHeader options={{positionType}}>
+                        <WrapperHeader options={{ positionType }}>
                             <span>{headerText}</span>
                             <span>
                                 <button ref={closeBtn} onClick={requestHide}>close</button>
                             </span>
                         </WrapperHeader>
-                        <hr/>
+                        <hr />
                         <div>
                             {children}
                         </div>
                     </Layer>
                     <HideElementForFocusControll
                         onFocus={rollbackFocus}
-                        tabIndex='0'
+                        tabIndex={0}
                     />
                 </Content>
             </Wrapper>
-            
+
         </Dimd>
     );
 }

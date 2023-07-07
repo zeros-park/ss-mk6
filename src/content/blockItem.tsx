@@ -1,3 +1,4 @@
+import { IReactFC } from "@/types/global";
 import React from "react";
 import styled from 'styled-components';
 
@@ -12,7 +13,15 @@ const Item = styled.div`
     padding: 5px 5px 5px 5px;
     border: 1px solid;
 `
-const BlockItem = ({ item, text, children }) => {
+
+const BlockItem: IReactFC<{
+    item?: object,
+    text: string,
+}> = ({ item, text, children }) => {
+    if (item !== undefined) {
+        console.log('item: ', item);
+    }
+
     return (
         <Layout>
             <Item>
@@ -20,7 +29,7 @@ const BlockItem = ({ item, text, children }) => {
                 {children}
             </Item>
         </Layout>
-        
+
     );
 }
 

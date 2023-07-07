@@ -2,8 +2,9 @@ import type { AppProps } from 'next/app'
 import { ThemeProvider, DefaultTheme } from 'styled-components'
 import { Provider } from 'react-redux';
 import store from '@/store';
-import GlobalStyle from '../components/globalstyles'
+import GlobalStyle from '@/components/globalstyles'
 
+import { ILayout } from '@/types/global';
 import Logo from '@/frame/logo';
 import Header from '@/frame/header';
 import Aside from '@/frame/aside';
@@ -18,7 +19,7 @@ const theme: DefaultTheme = {
 }
 
 export default function App({ Component, pageProps }: AppProps) {
-  const layoutOptions = {
+  const layout: ILayout = {
     mediaWidthOptions: {
       minimal: 300,
       simple: 600,
@@ -40,10 +41,10 @@ export default function App({ Component, pageProps }: AppProps) {
             <FloatingLayerLegacy>
               <span>yyes!!!</span>
             </FloatingLayerLegacy>
-            <Logo layoutOptions={layoutOptions}></Logo>
-            <Header layoutOptions={layoutOptions}></Header>
-            <Aside layoutOptions={layoutOptions}></Aside>
-            <Main layoutOptions={layoutOptions}>
+            <Logo layout={layout}></Logo>
+            <Header layout={layout}></Header>
+            <Aside layout={layout}></Aside>
+            <Main layout={layout}>
               <Component {...pageProps} />
             </Main>
           </div>

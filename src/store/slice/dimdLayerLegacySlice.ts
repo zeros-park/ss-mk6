@@ -1,33 +1,33 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-/**
- * todo : 추후 ts로 변경하면 사라질 방식임
- */
-const validPositionType = (positionType) => {
-  return ['center', 'left', 'right', 'bottom', 'top']
-    .indexOf(positionType) !== -1;
+export type positionType = 'center' | 'left' | 'right' | 'bottom' | 'top' | undefined;
+export type extendType = 'width' | 'height' | 'full' | 'default' | undefined;
+
+export const validTypes = (positionType: positionType, extendType: extendType) => {
+  return (positionType !== undefined) && (extendType !== undefined)
 }
-/**
- * todo : 추후 ts로 변경하면 사라질 방식임
- */
-const validExtendType = (extendType) => {
-  return ['width', 'height', 'full', 'default']
-    .indexOf(extendType) !== -1;
+
+export interface IDimdLayerStateLegacy {
+  type: {
+    isShowDimd: boolean,
+    isRequestShow: boolean,
+    isShowContent: boolean,
+    extendType: extendType,
+    positionType: positionType,
+  }
 }
-export const validTypes = (positionType, extendType) => {
-  return validPositionType(positionType) && validExtendType(extendType);
+const initialState: IDimdLayerStateLegacy = {
+  type: {
+    isShowDimd: true,
+    isRequestShow: false,
+    isShowContent: false,
+    extendType: undefined,
+    positionType: undefined,
+  }
 }
 const dimdLayerSlice = createSlice({
   name: 'dimdLayer',
-  initialState: {
-    type: {
-      isShowDimd: true,
-      isRequestShow: false,
-      isShowContent: false,
-      extendType: undefined,
-      positionType: undefined,
-    }
-  },
+  initialState,
   reducers: {
     show: (state) => {
       state.type.isShowContent = true;
@@ -36,7 +36,7 @@ const dimdLayerSlice = createSlice({
       state.type.isRequestShow = false;
       state.type.isShowContent = false;
     },
-    open: (state, {payload}) => {
+    open: (state, { payload }) => {
       const [positionType, extendType] = payload;
 
       if (validTypes(positionType, extendType)) {
@@ -46,7 +46,7 @@ const dimdLayerSlice = createSlice({
       } else {
         state.type.positionType = undefined;
         state.type.extendType = undefined;
-      }      
+      }
     },
     close: (state) => {
       state.type.positionType = undefined;

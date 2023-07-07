@@ -1,6 +1,7 @@
 import React from "react";
 import styled from 'styled-components';
 import YScrollWrapper from "@/content/YScrollWrapper";
+import { ITSXLayoutProps, IStyledLayoutProps } from "@/types/global";
 
 const Wrapper = styled.div`
     background-color: #80808036;
@@ -10,7 +11,7 @@ const Wrapper = styled.div`
     width: 100%;
     height: 100%;
 `
-const Content = styled.main`
+const Content = styled.main<IStyledLayoutProps>`
     ${props => (`
         position: relative;
         height: 100%;
@@ -23,13 +24,16 @@ const Content = styled.main`
         }
     `)}
 `
-const Main = ({ layoutOptions, children }) => {
+interface IProps extends ITSXLayoutProps {
+    children: React.ReactNode
+}
+const Main: React.FC<IProps> = ({ layout, children }) => {
     return (
         <Wrapper className="_main">
-            <Content layout={layoutOptions}>
-                <YScrollWrapper marginTop={layoutOptions.headerHeightSize}>
+            <Content layout={layout}>
+                <YScrollWrapper marginTop={layout.headerHeightSize}>
                     {children}
-                </YScrollWrapper> 
+                </YScrollWrapper>
             </Content>
         </Wrapper>
     );

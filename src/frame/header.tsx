@@ -1,8 +1,9 @@
 import React from "react";
 import styled from 'styled-components';
 import CounterTestItem from "@/content/test-counter";
+import { IStyledLayoutProps, ITSXLayoutProps } from "@/types/global";
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<IStyledLayoutProps>`
     ${props => (`
         position: absolute;
         top: 0;
@@ -15,7 +16,7 @@ const Wrapper = styled.div`
     `)}
 `
 
-const Content = styled.section`
+const Content = styled.section<IStyledLayoutProps>`
     ${props => (`
         position: relative;
         margin-left: ${props.layout.asideLeftSizeOptions.default}px;
@@ -32,15 +33,11 @@ const Item = styled.span`
     margin: 5px 5px 5px 5px;
     background: #ffffff;
 `
-const Header = ({ layoutOptions }) => {
+const Header: React.FC<ITSXLayoutProps> = ({ layout }) => {
     return (
-        <Wrapper layout={layoutOptions}>
-            <Content layout={layoutOptions}>
+        <Wrapper layout={layout}>
+            <Content layout={layout}>
                 <FlexArea>
-                    {/* <Item>
-                        <input type='text' placeholder='검색창'></input>
-                        
-                    </Item> */}
                     <CounterTestItem></CounterTestItem>
                 </FlexArea>
                 <FlexArea>
@@ -48,9 +45,9 @@ const Header = ({ layoutOptions }) => {
                         <span>Auth</span>
                     </Item>
                 </FlexArea>
-            </Content>    
+            </Content>
         </Wrapper>
-    );
+    )
 }
 
 export default Header;

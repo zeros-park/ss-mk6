@@ -3,8 +3,11 @@ import styled from 'styled-components';
 import { useSelector, useDispatch } from "react-redux";
 import { validTypes, hide } from "@/store/slice/dimdLayerLegacySlice";
 import ContentWrapper from "@/frame/floatingLayerLegacy/contentWrapper";
+import { IReactFC } from "@/types/global";
+import { IRootStore } from "@/store";
+import { IDimdLayerStateLegacy } from "@/store/slice/dimdLayerLegacySlice";
 
-const Dimd = styled.div`
+const Dimd = styled.div<IDimdLayerStateLegacy>`
     position: absolute;
     top: 0;
     left: 0;
@@ -31,19 +34,20 @@ const Dimd = styled.div`
     }
 `
 
-const FloatingLayerLegacy = ({children}) => {
-    const dimd = useRef();
-    const type = useSelector(state => state.dimdLayer.type);
+const FloatingLayerLegacy: IReactFC = ({ children }) => {
+    const dimd = useRef<HTMLDivElement>(null);
+    const type = useSelector((state: IRootStore) => state.dimdLayer.type);
     const dispatch = useDispatch();
     const isValidOptions = () => validTypes(type.positionType, type.extendType)
 
-    const hideDimd = (event) => {
+    const hideDimd: React.TransitionEventHandler<HTMLDivElement> = (event) => {
         event.stopPropagation();
 
-        if (dimd.current === event.target && event.target.classList.contains('off')) {
+        if (dimd.current === event.target && isValidOptions() === false) {
+            console.log('whow', dimd)
             dispatch(hide());
         }
-    } 
+    }
 
     /**
      * 플로팅 레이어에 대한 트렌지션 완료.
@@ -57,13 +61,13 @@ const FloatingLayerLegacy = ({children}) => {
      * 
      */
     return (
-        <Dimd 
+        <Dimd
             className={isValidOptions() ? 'on' : 'off'}
             ref={dimd}
             type={type}
-            onTransitionEnd={hideDimd}    
+            onTransitionEnd={hideDimd}
         >
-            {isValidOptions() && 
+            {isValidOptions() &&
                 <ContentWrapper>
                     {children}
                 </ContentWrapper>
