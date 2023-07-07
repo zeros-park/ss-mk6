@@ -32,7 +32,7 @@ const StyledA = styled.a`
   font-size: 1.5rem;
 `
 
-const StyledLink = ({ href, name }) => (
+const StyledLink = ({ href, name }: { href: string, name: string }) => (
   <Link href={href} passHref legacyBehavior>
     <StyledA>{name}</StyledA>
   </Link>
