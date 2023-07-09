@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import BlockItem from "@/content/blockItem";
 import YScrollWrapper from "@/content/YScrollWrapper";
 import Link from "next/link";
-import { ITSXLayoutProps, IStyledLayoutProps } from "@/types/global";
+import { IStyledLayoutProps } from "@/types/global";
 
 const Section = styled.section<IStyledLayoutProps>`
     ${props => (`
@@ -23,7 +23,7 @@ const Section = styled.section<IStyledLayoutProps>`
     `)}   
 `
 
-const Aside: React.FC<ITSXLayoutProps> = ({ layout }) => {
+const Aside: React.FC<IStyledLayoutProps> = ({ layout }) => {
     return (
         <Section className="_aside" layout={layout}>
             <YScrollWrapper marginTop={layout.headerHeightSize}>

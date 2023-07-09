@@ -1,7 +1,7 @@
 import React from "react";
 import styled from 'styled-components';
 import CounterTestItem from "@/content/test-counter";
-import { IStyledLayoutProps, ITSXLayoutProps } from "@/types/global";
+import { IStyledLayoutProps } from "@/types/global";
 
 const Wrapper = styled.div<IStyledLayoutProps>`
     ${props => (`
@@ -33,7 +33,7 @@ const Item = styled.span`
     margin: 5px 5px 5px 5px;
     background: #ffffff;
 `
-const Header: React.FC<ITSXLayoutProps> = ({ layout }) => {
+const Header: React.FC<IStyledLayoutProps> = ({ layout }) => {
     return (
         <Wrapper layout={layout}>
             <Content layout={layout}>

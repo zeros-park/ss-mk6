@@ -12,10 +12,6 @@ export type ILayout = {
     },
     headerHeightSize: number,
 }
-export type ITSXLayoutProps = {
-    layout: ILayout
-}
-
 export type IStyledLayoutProps = {
     layout: ILayout
 }

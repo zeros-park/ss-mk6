@@ -1,7 +1,7 @@
 import React from "react";
 import styled from 'styled-components';
 import YScrollWrapper from "@/content/YScrollWrapper";
-import { ITSXLayoutProps, IStyledLayoutProps } from "@/types/global";
+import { IReactFC, IStyledLayoutProps } from "@/types/global";
 
 const Wrapper = styled.div`
     background-color: #80808036;
@@ -24,10 +24,7 @@ const Content = styled.main<IStyledLayoutProps>`
         }
     `)}
 `
-interface IProps extends ITSXLayoutProps {
-    children: React.ReactNode
-}
-const Main: React.FC<IProps> = ({ layout, children }) => {
+const Main: IReactFC<IStyledLayoutProps> = ({ layout, children }) => {
     return (
         <Wrapper className="_main">
             <Content layout={layout}>

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from 'styled-components';
-import { ITSXLayoutProps, IStyledLayoutProps } from '@/types/global';
+import { IStyledLayoutProps } from '@/types/global';
 ////////////////////////////
 // Style
 ////////////////////////////
@@ -36,7 +36,7 @@ const AsideSVG = styled.svg`
 ////////////////////////////
 // TSX
 ////////////////////////////
-const Logo: React.FC<ITSXLayoutProps> = ({ layout }) => {
+const Logo: React.FC<IStyledLayoutProps> = ({ layout }) => {
     const clickLogo: React.MouseEventHandler<HTMLButtonElement> = (el) => {
         console.log(el);
         alert('oops aside!!')
