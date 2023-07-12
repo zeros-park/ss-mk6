@@ -1,24 +1,22 @@
 import React from "react";
 import styled from 'styled-components';
 import { IStyledLayoutProps } from '@/types/global';
+import ToggleButton from "@/frame/floatingLayer/toggleButton";
+import DimdLayerTestItem from "@/content/test-dimdLayer";
 ////////////////////////////
 // Style
 ////////////////////////////
-const Wrapper = styled.div<IStyledLayoutProps>`
-    ${props => `
-        background-color: green;
-        position: absolute;
-        z-index: 300;
-        top: 0;
-        left: 0;
-        width: ${props.layout.asideLeftSizeOptions.default}px;
-        height: ${props.layout.headerHeightSize}px;
-
-        @media (prefers-color-scheme: dark) {
-            background-color: yellow;
-        }
-    `}
-`
+const Wrapper = styled.section<IStyledLayoutProps>`${props => ({
+    backgroundColor: 'green',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: `${props.layout.asideLeftSizeOptions.default}px`,
+    height: `${props.layout.headerHeightSize}px`,
+    [`@media (prefers-color-scheme: dark)`]: {
+        backgroundColor: 'yellow'
+    },
+})}`
 
 const Content = styled.div`
     position: relative;
@@ -43,7 +41,7 @@ const Logo: React.FC<IStyledLayoutProps> = ({ layout }) => {
     }
 
     return (
-        <Wrapper className="_logo" layout={layout}>
+        <Wrapper layout={layout}>
             <Content>
                 <button onClick={clickLogo}>
                     <AsideSVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
@@ -53,6 +51,12 @@ const Logo: React.FC<IStyledLayoutProps> = ({ layout }) => {
                     </AsideSVG>
                 </button>
                 <span>LOGO</span>
+                <ToggleButton
+                    text={'test'}
+                    options={['center', 'default', true, '중앙/기본']}
+                >
+                    <DimdLayerTestItem></DimdLayerTestItem>
+                </ToggleButton>
             </Content>
         </Wrapper>
     );

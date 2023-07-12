@@ -1,30 +1,27 @@
+import { IReactFC, IStyledLayoutProps } from "@/types/global";
 import React from "react";
 import styled from 'styled-components';
 
-const YScrollFlexWrapper = styled.section`
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-`
-const YScrolledContent = styled.div<{
-    height: number
-}>`
-    ${props => (`
-        margin-top: ${props.height}px;
-        overflow-y: auto;
-    `)}   
-`
+const Wrapper = styled.section<IStyledLayoutProps>`${({ layout }) => ({
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    pointerEvents: 'none',
+    marginTop: `-${layout.headerHeightSize}px`,
+})}`
+const Content = styled.div<IStyledLayoutProps>`${({ layout }) => ({
+    pointerEvents: 'auto',
+    marginTop: `${layout.headerHeightSize}px`,
+    overflowY: 'auto'
+})}`
 
-const YScrollWrapper: React.FC<{
-    marginTop: number,
-    children: React.ReactNode
-}> = ({ marginTop = 0, children }) => {
+const YScrollWrapper: IReactFC<IStyledLayoutProps> = ({ layout, children }) => {
     return (
-        <YScrollFlexWrapper className="_ysfw">
-            <YScrolledContent height={marginTop}>
+        <Wrapper layout={layout}>
+            <Content layout={layout}>
                 {children}
-            </YScrolledContent>
-        </YScrollFlexWrapper>
+            </Content>
+        </Wrapper>
     );
 }
 

@@ -1,39 +1,21 @@
 import { IReactFC } from "@/types/global";
-import React, { useState, useRef, useEffect, ReactEventHandler } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled from 'styled-components';
 
-// /**
-//  * todo : 추후 ts로 변경하면 사라질 방식임
-//  */
-// const validPositionType = (positionType: positionType) => {
-//     return ['center', 'left', 'right', 'bottom', 'top']
-//     .indexOf(positionType) !== -1;
-// }
-// /**
-//  * todo : 추후 ts로 변경하면 사라질 방식임
-//  */
-// const validExtendType = (extendType) => {
-//     return ['width', 'height', 'full', 'default']
-//     .indexOf(extendType) !== -1;
-// }
-// const validTypes = (positionType, extendType) => {
-//     return validPositionType(positionType) && validExtendType(extendType);
-// }
-type positionType = 'center' | 'left' | 'right' | 'bottom' | 'top' | undefined;
-type extendType = 'width' | 'height' | 'full' | 'default' | undefined;
+export type positionType = 'center' | 'left' | 'right' | 'bottom' | 'top' | 'target';
+type extendType = 'width' | 'height' | 'full' | 'default';
 interface IDimdStyled {
     options: {
         isShowDimd?: boolean,
         isRequestShow?: boolean,
         isShowContent?: boolean,
+        isDirectShow?: boolean,
         extendType?: extendType,
         positionType?: positionType,
     }
 }
-export type IDimdOptions = [positionType, extendType, boolean, string]
-const validTypes = (positionType: positionType, extendType: extendType) => {
-    return (positionType !== undefined) && (extendType !== undefined)
-}
+export type IDimdOptions = [positionType, extendType, boolean, string, boolean?]
+
 const Dimd = styled.div<IDimdStyled>`
     position: fixed;
     top: 0;
@@ -48,10 +30,10 @@ const Dimd = styled.div<IDimdStyled>`
         left: 0;
         content: '';
         background: rgba(0, 0, 0, ${props => (props.options.isShowDimd ? '.4' : '0')});
-        backdrop-filter: blur(1px);
+        backdrop-filter: ${props => (props.options.isDirectShow ? '' : 'blur(1px)')};
         height: 100%;
         transition-property: opacity;
-        transition-duration: 500ms;
+        transition-duration: ${props => (props.options.isDirectShow ? '1ms' : '200ms')};
     }
     &.off:after {
         opacity: 0;
@@ -170,7 +152,7 @@ const Content = styled.div<IDimdStyled>`
     background-color: white;
     width: ${props => (props.options.extendType === 'full' ? '100%' : 'auto')};
     height: ${props => (props.options.extendType === 'full' ? '100%' : 'auto')};
-    transition-duration: 200ms;
+    transition-duration: ${props => (props.options.isDirectShow ? '1ms' : '200ms')};
     transition-property: transform;
     ${props => {
         const positionType = props.options.positionType;
@@ -245,15 +227,22 @@ const HideElementForFocusControll = styled.a``
 
 const FloatingLayer: IReactFC<{
     fireClose: () => void,
-    options: IDimdOptions,
+    options: IDimdOptions | positionType,
 }> = ({ fireClose, options, children }) => {
     const background = useRef<HTMLDivElement>(null);
     const closeBtn = useRef<HTMLButtonElement>(null);
     const content = useRef<HTMLDivElement>(null);
     const [isShowContent, setIsShowContent] = useState(false);
-    const [positionType, extendType, isShowDimd, headerText] = options;
+    // todo 추후에 좀더 고민좀 해보자. 썩 맘에 안듬
+    const [positionType, extendType, isShowDimd, headerText, isDirectShow = false]: IDimdOptions = (() => {
+        if (typeof options === 'string') {
+            return [options as positionType, 'width', true, '옵션테스트', true];
+        } else {
+            return options as IDimdOptions;
+        }
+    })()
+    // const [positionType, extendType, isShowDimd, headerText] = options;
 
-    const isValidOptions = () => validTypes(positionType, extendType)
     const requestHide = () => setIsShowContent(false)
 
     const tryToHideContent: React.MouseEventHandler<HTMLDivElement> = (event) => {
@@ -268,13 +257,12 @@ const FloatingLayer: IReactFC<{
         event.stopPropagation();
 
         if (isShowContent === false) {
-            // if (event.target.classList.contains('off')) {
             fireClose();
         }
     }
 
     useEffect(() => {
-        if (isValidOptions() && (isShowContent === false)) {
+        if (isShowContent === false) {
             /**
              * dispatch를 통한 업데이트가 리엑트컴포넌트의 재렌더링을 유발하며 비동기적으로 진행이 시작됨
              * 컴포넌트의 재렌더링은 useEffect 훅이 완료되고 나서 진행됨
@@ -289,12 +277,12 @@ const FloatingLayer: IReactFC<{
             // setTimeout(() => {dispacth(show())});
             setIsShowContent(true);
         }
-    }, [isValidOptions()]);
+    }, []);
 
     return (
         <Dimd
             className={isShowContent ? 'on' : 'off'}
-            options={{ isShowDimd, isShowContent }}
+            options={{ isShowDimd, isShowContent, isDirectShow }}
         >
             <Wrapper
                 ref={background}
@@ -304,7 +292,7 @@ const FloatingLayer: IReactFC<{
                 <Content
                     ref={content}
                     className={isShowContent ? 'on' : 'off'}
-                    options={{ positionType, extendType }}
+                    options={{ positionType, extendType, isDirectShow }}
                     onTransitionEnd={destroyWrapper}
                 >
                     <Layer>

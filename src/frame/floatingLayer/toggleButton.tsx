@@ -1,40 +1,59 @@
-import React, { useState } from "react";
-import styled from 'styled-components';
-import FloatingLayer, { IDimdOptions } from "@/frame/floatingLayer/floatingLayer";
+import React, { ReactEventHandler, useState } from "react";
+import styled, { CSSObject } from 'styled-components';
+import FloatingLayer, { IDimdOptions, positionType } from "@/frame/floatingLayer/floatingLayer";
 import { IReactFC } from "@/types/global";
 
-
-const Button = styled.button<{ styled: string }>`
-    ${props => props.styled}
+interface IProps {
+    options: {
+        styled: CSSObject,
+        isShow: boolean,
+        styledFocus: CSSObject,
+    }
+}
+const Button = styled.button<IProps>`
+    ${({ options }) => [
+        options.styled,
+        (options.isShow === true) ? options.styledFocus : {}
+    ]}
 `
 
 const ToggleButton: IReactFC<{
-    styledString?: string,
-    text?: string,
-    options: IDimdOptions
-}> = ({ styledString = '', text, options, children }) => {
-    const [isShow, setIsShow] = useState(false);
+    styled?: CSSObject,
+    styledFocus?: CSSObject,
+    text: string,
+    options: IDimdOptions | positionType
+}> = ({
+    styled = {},
+    styledFocus = {},
+    text,
+    options,
+    children
+}) => {
+        const [isShow, setIsShow] = useState(false);
+        const setButtonState: ReactEventHandler<HTMLButtonElement> = (event) => {
+            console.log(event)
+            setIsShow(true)
+        }
 
-    return (
-        <>
-            <Button
-                onClick={() => setIsShow(true)}
-                styled={styledString}
-            >
-                {text}
-            </Button>
-            {isShow &&
-                <FloatingLayer
-                    fireClose={() => setIsShow(false)}
-                    options={options}
+        return (
+            <span>
+                <Button
+                    onClick={setButtonState}
+                    options={{ styled, isShow, styledFocus }}
                 >
-                    {children}
-                </FloatingLayer>
+                    {text}
+                </Button>
+                {isShow &&
+                    <FloatingLayer
+                        fireClose={() => setIsShow(false)}
+                        options={options}
+                    >
+                        {children}
+                    </FloatingLayer>
 
-            }
-        </>
-    )
-
-}
+                }
+            </span>
+        )
+    }
 
 export default ToggleButton;

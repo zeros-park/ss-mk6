@@ -14,6 +14,9 @@ const TestItem = styled.div`
     display: block;
     border: 2px solid green;
 `
+const Content = styled.div`${{
+  border: '1px solid red'
+}}`
 export async function getServerSideProps() {
   const metaImageList: mateImageList = await new Promise((resolve) => setTimeout(() => {
     resolve({
@@ -46,7 +49,7 @@ const Test: React.FC<{
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:image" content={metaImageList.twitterImage} />
       </Head>
-      <div>
+      <Content>
         <TestItem>
           <CounterTestItem />
         </TestItem>
@@ -65,7 +68,7 @@ const Test: React.FC<{
         <TestItem>Main7</TestItem>
         <TestItem>Main8</TestItem>
         <div>end</div>
-      </div>
+      </Content>
     </>
   )
 }
