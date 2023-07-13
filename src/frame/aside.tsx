@@ -1,11 +1,7 @@
 import React from "react";
 import styled from 'styled-components';
-import BlockItem from "@/content/blockItem";
 import YScrollWrapper from "@/content/YScrollWrapper";
-import Link from "next/link";
-import { IStyledLayoutProps } from "@/types/global";
-import ToggleButton from "@/frame/floatingLayer/toggleButton";
-import DimdLayerTestItem from "@/content/test-dimdLayer";
+import { IReactFC, IStyledLayoutProps } from "@/types/global";
 
 const Wrapper = styled.section<IStyledLayoutProps>`${({ layout }) => ({
     position: 'absolute',
@@ -27,51 +23,12 @@ const Content = styled.div<IStyledLayoutProps>`${({ layout }) => ({
     marginTop: `${layout.headerHeightSize}px;`,
 })}`
 
-const LinkStyle = styled.span`${{
-    textDecoration: 'underline',
-    ":hover": {
-        fontWeight: 'bold'
-    }
-}}`
-
-const Aside: React.FC<IStyledLayoutProps> = ({ layout }) => {
+const Aside: IReactFC<IStyledLayoutProps> = ({ layout, children }) => {
     return (
         <Wrapper layout={layout}>
             <Content layout={layout}>
                 <YScrollWrapper layout={layout}>
-                    <BlockItem text={'ai 1'}>
-                        <Link href="/">
-                            <LinkStyle>home</LinkStyle>
-                        </Link>
-                    </BlockItem>
-                    <BlockItem text={'ai 2'}>
-                        <Link href="/about">
-                            <LinkStyle>about</LinkStyle>
-                        </Link>
-                    </BlockItem>
-                    <BlockItem text={'ai 3'}>
-                        <Link href="/test">
-                            <LinkStyle>test</LinkStyle>
-                        </Link>
-                    </BlockItem>
-                    <BlockItem text={'ai 4'}>
-                        <ToggleButton
-                            text={'영역 테스트 레이어 오픈'}
-                            options={['center', 'default', true, '중앙/기본']}
-                        >
-                            <DimdLayerTestItem></DimdLayerTestItem>
-                        </ToggleButton>
-                    </BlockItem>
-                    <BlockItem text={'ai 5'}></BlockItem>
-                    <BlockItem text={'ai 6'} />
-                    <BlockItem text={'ai 7'} />
-                    <BlockItem text={'ai 8'} />
-                    <BlockItem text={'ai 9'} />
-                    <BlockItem text={'ai 10'} />
-                    <BlockItem text={'ai 11'} />
-                    <BlockItem text={'ai 12'} />
-                    <BlockItem text={'ai 13'} />
-                    <div>end</div>
+                    {children}
                 </YScrollWrapper>
             </Content>
         </Wrapper>

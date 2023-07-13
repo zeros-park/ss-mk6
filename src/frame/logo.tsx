@@ -1,6 +1,6 @@
 import React from "react";
 import styled from 'styled-components';
-import { IStyledLayoutProps } from '@/types/global';
+import { IReactFC, IStyledLayoutProps } from '@/types/global';
 import ToggleButton from "@/frame/floatingLayer/toggleButton";
 import DimdLayerTestItem from "@/content/test-dimdLayer";
 ////////////////////////////
@@ -25,38 +25,14 @@ const Content = styled.div`
     align-items: center;
 `
 
-const AsideSVG = styled.svg`
-    width: 30px;
-    height: 30px;
-    vertical-align: middle;
-`
-
 ////////////////////////////
 // TSX
 ////////////////////////////
-const Logo: React.FC<IStyledLayoutProps> = ({ layout }) => {
-    const clickLogo: React.MouseEventHandler<HTMLButtonElement> = (el) => {
-        console.log(el);
-        alert('oops aside!!')
-    }
-
+const Logo: IReactFC<IStyledLayoutProps> = ({ layout, children }) => {
     return (
         <Wrapper layout={layout}>
             <Content>
-                <button onClick={clickLogo}>
-                    <AsideSVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
-                        <rect x="0" y="6" width="30" height="2" rx="2" />
-                        <rect x="0" y="13" width="30" height="2" rx="2" />
-                        <rect x="0" y="20" width="30" height="2" rx="2" />
-                    </AsideSVG>
-                </button>
-                <span>LOGO</span>
-                <ToggleButton
-                    text={'test'}
-                    options={['center', 'default', true, '중앙/기본']}
-                >
-                    <DimdLayerTestItem></DimdLayerTestItem>
-                </ToggleButton>
+                {children}
             </Content>
         </Wrapper>
     );

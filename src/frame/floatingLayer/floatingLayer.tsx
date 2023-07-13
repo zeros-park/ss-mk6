@@ -236,7 +236,7 @@ const FloatingLayer: IReactFC<{
     // todo 추후에 좀더 고민좀 해보자. 썩 맘에 안듬
     const [positionType, extendType, isShowDimd, headerText, isDirectShow = false]: IDimdOptions = (() => {
         if (typeof options === 'string') {
-            return [options as positionType, 'width', true, '옵션테스트', true];
+            return [options as positionType, 'default', true, '옵션테스트', true];
         } else {
             return options as IDimdOptions;
         }

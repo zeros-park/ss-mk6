@@ -1,9 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { CSSObject } from 'styled-components';
-import CounterTestItem from "@/content/test-counter";
-import { IStyledLayoutProps } from "@/types/global";
-import ToggleButton from "@/frame/floatingLayer/toggleButton";
-import DimdLayerTestItem from "@/content/test-dimdLayer";
+import { IReactFC, IStyledLayoutProps } from "@/types/global";
 
 const Wrapper = styled.section<IStyledLayoutProps>`${props => ({
     position: 'absolute',
@@ -25,46 +22,11 @@ const Content = styled.div<IStyledLayoutProps>`${props => ({
     height: '100%',
     backgroundColor: '#beb9c8',
 })}`
-const FlexArea = styled.div`
-`
-const Item = styled.span`
-    padding: 5px 5px 5px 5px;
-    margin: 5px 5px 5px 5px;
-    background: #ffffff;
-`
-const css: CSSObject = {
-    backgroundColor: 'gray',
-    color: 'white'
-}
-const Header: React.FC<IStyledLayoutProps> = ({ layout }) => {
+const Header: IReactFC<IStyledLayoutProps> = ({ layout, children }) => {
     return (
         <Wrapper layout={layout}>
             <Content layout={layout}>
-                <FlexArea>
-                    <CounterTestItem></CounterTestItem>
-                </FlexArea>
-                <FlexArea>
-                    <Item>
-                        <ToggleButton
-                            text={'영역 테스트 레이어 오픈'}
-                            options={['center', 'default', true, '중앙/기본']}
-                        >
-                            <DimdLayerTestItem></DimdLayerTestItem>
-                        </ToggleButton>
-                        <ToggleButton
-                            options="top"
-                            text="모드"
-                            // styledFocus="background-color: #a3f9be;"
-                            styledFocus={css}
-                        >
-                            <span>Auth</span>
-                        </ToggleButton>
-
-                    </Item>
-                    <Item>
-                        <span>Auth</span>
-                    </Item>
-                </FlexArea>
+                {children}
             </Content>
         </Wrapper>
     )
