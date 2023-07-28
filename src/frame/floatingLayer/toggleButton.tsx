@@ -31,7 +31,6 @@ const ToggleButton: IReactFC<{
 }) => {
         const [isShow, setIsShow] = useState(false);
         const setButtonState: ReactEventHandler<HTMLButtonElement> = (event) => {
-            console.log(event)
             setIsShow(true)
         }
 

@@ -1,7 +1,7 @@
 import type { AppProps } from 'next/app'
 import { ThemeProvider, DefaultTheme } from 'styled-components'
-import { Provider } from 'react-redux';
-import store from '@/store';
+import { Provider, useDispatch } from 'react-redux';
+// import store from '@/store';
 import GlobalStyle from '@/components/globalstyles'
 
 import { ILayout } from '@/types/global';
@@ -13,6 +13,8 @@ import FloatingLayerLegacy from '@/frame/floatingLayerLegacy/floatingLayerLegacy
 import AsideContent from '@/content/frameRoot/asideContent';
 import HeaderContent from '@/content/frameRoot/headerContent';
 import LogoContent from '@/content/frameRoot/logoContent';
+import { wrapper } from '@/store';
+import Config from '@/frame/config';
 // import { ReactElement, ReactNode } from 'react';
 // import { NextPage } from 'next';
 
@@ -31,8 +33,11 @@ const theme: DefaultTheme = {
 //   Component: NextPageWithLayout
 // }
 
+
+
+
 // export default function App({ Component, pageProps }: AppPropsWithLayout) {
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, ...rest }: AppProps) {
   /**
    * 다크모드 설정과 함께 해당 정보도 redux로 넘기는게 맞을듯?
    */
@@ -49,13 +54,14 @@ export default function App({ Component, pageProps }: AppProps) {
     headerHeightSize: 50,
   }
 
+  const { store, props } = wrapper.useWrappedStore(rest);
   return (
     <>
       <ThemeProvider theme={theme}>
         <Provider store={store}>
           <GlobalStyle />
+          <Config />
           <div>
-
             <FloatingLayerLegacy>
               <span>yyes!!!</span>
             </FloatingLayerLegacy>
@@ -70,7 +76,7 @@ export default function App({ Component, pageProps }: AppProps) {
               <AsideContent></AsideContent>
             </Aside>
             <Main layout={layout}>
-              <Component {...pageProps} />
+              <Component {...props.pageProps} />
             </Main>
           </div>
         </Provider>

@@ -1,8 +1,9 @@
-'use client'
-
 import Head from 'next/head'
 import Link from 'next/link'
 import { Container, Main, Title, Description } from '@/components/sharedstyles'
+import { getOnceServerSideProps } from '@/frame/pagaWrapper/serverSideProps'
+
+export const getServerSideProps = getOnceServerSideProps();
 
 export default function About() {
   return (

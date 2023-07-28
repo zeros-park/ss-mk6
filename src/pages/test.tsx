@@ -3,6 +3,10 @@ import styled from 'styled-components';
 import CounterTestItem from "@/content/test-counter";
 import DimdLayerTestItem from "@/content/test-dimdLayer";
 import DimdLayerLegacyTestItem from "@/content/test-dimdLayerLegacy";
+import { useSelector } from 'react-redux';
+import { IRootStore } from '@/store';
+import { getOnceServerSideProps } from '@/frame/pagaWrapper/serverSideProps';
+
 
 interface mateImageList {
   ogImage: string,
@@ -17,24 +21,21 @@ const TestItem = styled.div`
 const Content = styled.div`${{
   border: '1px solid red'
 }}`
-export async function getServerSideProps() {
-  const metaImageList: mateImageList = await new Promise((resolve) => setTimeout(() => {
-    resolve({
-      ogImage: 'https://ss-mk5.vercel.app/asset/img/testimg5.png',
-      twitterImage: 'https://ss-mk5.vercel.app/asset/img/testimg6.png'
-    })
-  }, 100));
 
+export const getServerSideProps = getOnceServerSideProps(async () => {
   return {
     props: {
-      metaImageList,
-    },
-  };
-}
+      metaImageList: {
+        ogImage: 'https://ss-mk5.vercel.app/asset/img/testimg5.png',
+        twitterImage: 'https://ss-mk5.vercel.app/asset/img/testimg6.png',
+      }
+    }
+  }
+});
 
-const Test: React.FC<{
-  metaImageList: mateImageList
-}> = ({ metaImageList }) => {
+const Test: React.FC<{ metaImageList: mateImageList }> = ({ metaImageList }) => {
+  const colorMode = useSelector((state: IRootStore) => state.layout.colorMode);
+
   return (
     <>
       <Head>
@@ -51,7 +52,11 @@ const Test: React.FC<{
       </Head>
       <Content>
         <TestItem>
-          <CounterTestItem />
+          <>
+            <div>store data check</div>
+            <CounterTestItem />
+            <div>layout -  colorMode: {colorMode}</div>
+          </>
         </TestItem>
         <TestItem>
           <DimdLayerTestItem></DimdLayerTestItem>
@@ -72,4 +77,6 @@ const Test: React.FC<{
     </>
   )
 }
+
 export default Test;
+

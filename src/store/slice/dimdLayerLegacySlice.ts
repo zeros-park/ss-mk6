@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export type positionType = 'center' | 'left' | 'right' | 'bottom' | 'top' | undefined;
-export type extendType = 'width' | 'height' | 'full' | 'default' | undefined;
+export type positionType = 'center' | 'left' | 'right' | 'bottom' | 'top' | null;
+export type extendType = 'width' | 'height' | 'full' | 'default' | null;
 
 export const validTypes = (positionType: positionType, extendType: extendType) => {
-  return (positionType !== undefined) && (extendType !== undefined)
+  return (positionType !== null) && (extendType !== null)
 }
 
 export interface IDimdLayerStateLegacy {
@@ -21,8 +21,8 @@ const initialState: IDimdLayerStateLegacy = {
     isShowDimd: true,
     isRequestShow: false,
     isShowContent: false,
-    extendType: undefined,
-    positionType: undefined,
+    extendType: null,
+    positionType: null,
   }
 }
 const dimdLayerSlice = createSlice({
@@ -44,13 +44,13 @@ const dimdLayerSlice = createSlice({
         state.type.positionType = positionType;
         state.type.extendType = extendType;
       } else {
-        state.type.positionType = undefined;
-        state.type.extendType = undefined;
+        state.type.positionType = null;
+        state.type.extendType = null;
       }
     },
     close: (state) => {
-      state.type.positionType = undefined;
-      state.type.extendType = undefined;
+      state.type.positionType = null;
+      state.type.extendType = null;
     }
   }
 });

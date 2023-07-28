@@ -7,6 +7,9 @@ import {
   CodeTag,
 } from '@/components/sharedstyles'
 import Cards from '@/components/cards'
+import { getOnceServerSideProps } from '@/frame/pagaWrapper/serverSideProps';
+
+export const getServerSideProps = getOnceServerSideProps();
 
 export default function Home() {
   return (

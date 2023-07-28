@@ -1,13 +1,15 @@
 {
   "private": true,
   "scripts": {
-    "dev": "next",
+    "dev": "clear && next",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
+    "js-cookie": "^3.0.5",
     "next": "latest",
+    "next-redux-wrapper": "^8.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.1",
@@ -15,6 +17,8 @@
     "styled-components": "^5.3.5"
   },
   "devDependencies": {
+    "@types/cookie": "^0.5.1",
+    "@types/js-cookie": "^3.0.3",
     "@types/node": "^18.0.0",
     "@types/react": "^18.0.14",
     "@types/react-dom": "^18.0.5",

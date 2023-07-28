@@ -6,14 +6,14 @@ import { IReactFC } from "@/types/global";
 import { IRootStore } from "@/store";
 
 const isExtendWidth = (extendType: extendType) => {
-    if (extendType === undefined) {
+    if (extendType === null) {
         return false;
     } else {
         return ['width', 'full'].indexOf(extendType) !== -1;
     }
 }
 const isExtendHeight = (extendType: extendType) => {
-    if (extendType === undefined) {
+    if (extendType === null) {
         return false;
     } else {
         return ['height', 'full'].indexOf(extendType) !== -1;
