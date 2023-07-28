@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import styled from 'styled-components';
 import { useSelector, useDispatch } from "react-redux";
 import { validTypes, hide } from "@/store/slice/dimdLayerLegacySlice";
-import ContentWrapper from "@/frame/floatingLayerLegacy/contentWrapper";
+import ContentWrapper from "@/frame/appArchitecture/floatingLayerLegacy/contentWrapper";
 import { IReactFC } from "@/types/global";
 import { IRootStore } from "@/store";
 import { IDimdLayerStateLegacy } from "@/store/slice/dimdLayerLegacySlice";

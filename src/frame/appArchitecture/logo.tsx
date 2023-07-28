@@ -1,12 +1,13 @@
 import React from "react";
 import styled from 'styled-components';
-import { IReactFC, IStyledLayoutProps } from '@/types/global';
-import ToggleButton from "@/frame/floatingLayer/toggleButton";
-import DimdLayerTestItem from "@/content/test-dimdLayer";
+import { IReactFC } from '@/types/global';
+import { IStateLayout } from "@/store/slice/frameSlice";
+import { useSelector } from "react-redux";
+import { IRootStore } from "@/store";
 ////////////////////////////
 // Style
 ////////////////////////////
-const Wrapper = styled.section<IStyledLayoutProps>`${props => ({
+const Wrapper = styled.section<IStateLayout>`${props => ({
     backgroundColor: 'green',
     position: 'absolute',
     top: 0,
@@ -28,7 +29,9 @@ const Content = styled.div`
 ////////////////////////////
 // TSX
 ////////////////////////////
-const Logo: IReactFC<IStyledLayoutProps> = ({ layout, children }) => {
+const Logo: IReactFC = ({ children }) => {
+    const layout = useSelector((state: IRootStore) => state.layout.layout);
+    console.log('zeros logo draw!!!')
     return (
         <Wrapper layout={layout}>
             <Content>

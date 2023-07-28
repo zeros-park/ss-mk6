@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { IReactFC } from '@/types/global';
 import { useDispatch } from "react-redux";
-import { isCompleteFirstRender } from "@/store/slice/configSlice";
+import { isCompleteFirstRender } from "@/store/slice/documentSlice";
 
 const Config: IReactFC = () => {
     const dispatch = useDispatch();

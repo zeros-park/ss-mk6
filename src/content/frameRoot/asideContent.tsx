@@ -3,7 +3,7 @@ import React from "react";
 import styled from 'styled-components';
 import BlockItem from "@/content/blockItem";
 import Link from "next/link";
-import ToggleButton from "@/frame/floatingLayer/toggleButton";
+import ToggleButton from "@/frame/appArchitecture/floatingLayer/toggleButton";
 import DimdLayerTestItem from "@/content/test-dimdLayer";
 
 const LinkStyle = styled.span`${{

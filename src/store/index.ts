@@ -1,24 +1,18 @@
 import {
-  AnyAction,
   CombinedState,
   combineReducers,
   configureStore,
-  createStore,
-  Middleware,
   PayloadAction,
   Reducer,
 } from '@reduxjs/toolkit';
-
-
 import { createWrapper, HYDRATE } from 'next-redux-wrapper';
-
-import config, { ISliceConfig } from '@/store/slice/configSlice';
-import layout, { IStateLayout } from '@/store/slice/layoutSlice';
+import document, { ISliceDocument } from '@/store/slice/documentSlice';
 import counter, { ICounterStatus } from '@/store/slice/counterSlice';
 import dimdLayer, { IDimdLayerStateLegacy } from '@/store/slice/dimdLayerLegacySlice';
+import layout, { IStateLayout } from '@/store/slice/frameSlice';
 
 export interface IRootStore {
-  config: ISliceConfig,
+  document: ISliceDocument
   counter: ICounterStatus,
   dimdLayer: IDimdLayerStateLegacy,
   layout: IStateLayout,
@@ -35,12 +29,12 @@ export interface IRootStore {
 
 type appReducer = Reducer<CombinedState<IRootStore>, PayloadAction<IRootStore>>
 const rootReducer: appReducer = combineReducers<IRootStore>({
-  config,
+  document,
   counter,
   dimdLayer,
   layout,
 })
-// let initSetting = true;
+
 export const reducer: appReducer = (state, action) => {
   switch (action.type) {
     case HYDRATE:
@@ -48,9 +42,7 @@ export const reducer: appReducer = (state, action) => {
        * 1. 페이지 첫 진입시에는 서버렌더링 시에 생성되는 store 를 사용해서 병합니다.
        * 2. 첫 진입 이후에는 클라이언트에 세팅된 store 를 재사용하는 형식으로 대응한다.
        */
-      if (state?.config.isCompleteFirstRender !== true) {
-        // if (initSetting) {
-        // initSetting = false;
+      if (state?.document.isCompleteFirstRender !== true) {
         return {
           ...state,
           ...action.payload

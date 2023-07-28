@@ -1,7 +1,7 @@
 import { IReactFC } from "@/types/global";
 import React from "react";
 import styled from 'styled-components';
-import ToggleButton from "@/frame/floatingLayer/toggleButton";
+import ToggleButton from "@/frame/appArchitecture/floatingLayer/toggleButton";
 import DimdLayerTestItem from "@/content/test-dimdLayer";
 
 const AsideSVG = styled.svg`

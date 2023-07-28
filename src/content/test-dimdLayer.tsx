@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { CSSObject } from 'styled-components';
-import ToggleButton from "@/frame/floatingLayer/toggleButton";
+import ToggleButton from "@/frame/appArchitecture/floatingLayer/toggleButton";
 
 const Layout = styled.div`${{
     padding: '10px 10px 10px 10px',

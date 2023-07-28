@@ -1,7 +1,10 @@
 import React from "react";
 import styled from 'styled-components';
-import YScrollWrapper from "@/content/YScrollWrapper";
-import { IReactFC, IStyledLayoutProps } from "@/types/global";
+import { IReactFC } from "@/types/global";
+import { IStateLayout } from "@/store/slice/frameSlice";
+import { useSelector } from "react-redux";
+import { IRootStore } from "@/store";
+import YScrollWrapper from "@/frame/appArchitecture/YScrollWrapper";
 
 const Wrapper = styled.section`${{
     position: "absolute",
@@ -11,7 +14,7 @@ const Wrapper = styled.section`${{
     width: '100%',
     height: '100%',
 }}`
-const Content = styled.main<IStyledLayoutProps>`${({ layout }) => ({
+const Content = styled.main<IStateLayout>`${({ layout }) => ({
     position: 'relative',
     height: '100%',
     marginLeft: `${layout.asideLeftSizeOptions.default}px`,
@@ -23,7 +26,9 @@ const Content = styled.main<IStyledLayoutProps>`${({ layout }) => ({
         marginLeft: 0
     }
 })}`
-const Main: IReactFC<IStyledLayoutProps> = ({ layout, children }) => {
+const Main: IReactFC = ({ children }) => {
+    const layout = useSelector((state: IRootStore) => state.layout.layout);
+
     return (
         <Wrapper>
             <Content layout={layout}>

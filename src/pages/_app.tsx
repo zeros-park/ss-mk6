@@ -1,20 +1,19 @@
 import type { AppProps } from 'next/app'
 import { ThemeProvider, DefaultTheme } from 'styled-components'
-import { Provider, useDispatch } from 'react-redux';
-// import store from '@/store';
+import { Provider } from 'react-redux';
 import GlobalStyle from '@/components/globalstyles'
 
-import { ILayout } from '@/types/global';
-import Logo from '@/frame/logo';
-import Header from '@/frame/header';
-import Aside from '@/frame/aside';
-import Main from '@/frame/main';
-import FloatingLayerLegacy from '@/frame/floatingLayerLegacy/floatingLayerLegacy';
+import Config from '@/frame/appArchitecture/config';
+import Logo from '@/frame/appArchitecture/logo';
+import Header from '@/frame/appArchitecture/header';
+import Aside from '@/frame/appArchitecture/aside';
+import Main from '@/frame/appArchitecture/main';
+import FloatingLayerLegacy from '@/frame/appArchitecture/floatingLayerLegacy/floatingLayerLegacy';
+
 import AsideContent from '@/content/frameRoot/asideContent';
 import HeaderContent from '@/content/frameRoot/headerContent';
 import LogoContent from '@/content/frameRoot/logoContent';
 import { wrapper } from '@/store';
-import Config from '@/frame/config';
 // import { ReactElement, ReactNode } from 'react';
 // import { NextPage } from 'next';
 
@@ -34,26 +33,8 @@ const theme: DefaultTheme = {
 // }
 
 
-
-
 // export default function App({ Component, pageProps }: AppPropsWithLayout) {
 export default function App({ Component, ...rest }: AppProps) {
-  /**
-   * 다크모드 설정과 함께 해당 정보도 redux로 넘기는게 맞을듯?
-   */
-  const layout: ILayout = {
-    mediaWidthOptions: {
-      minimal: 300,
-      simple: 600,
-    },
-    asideLeftSizeOptions: {
-      minimal: null,
-      simple: 60,
-      default: 200,
-    },
-    headerHeightSize: 50,
-  }
-
   const { store, props } = wrapper.useWrappedStore(rest);
   return (
     <>
@@ -66,16 +47,16 @@ export default function App({ Component, ...rest }: AppProps) {
               <span>yyes!!!</span>
             </FloatingLayerLegacy>
 
-            <Logo layout={layout}>
+            <Logo>
               <LogoContent></LogoContent>
             </Logo>
-            <Header layout={layout}>
+            <Header>
               <HeaderContent></HeaderContent>
             </Header>
-            <Aside layout={layout}>
+            <Aside>
               <AsideContent></AsideContent>
             </Aside>
-            <Main layout={layout}>
+            <Main>
               <Component {...props.pageProps} />
             </Main>
           </div>

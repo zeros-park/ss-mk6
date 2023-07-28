@@ -34,7 +34,7 @@ export const getServerSideProps = getOnceServerSideProps(async () => {
 });
 
 const Test: React.FC<{ metaImageList: mateImageList }> = ({ metaImageList }) => {
-  const colorMode = useSelector((state: IRootStore) => state.layout.colorMode);
+  const colorMode = useSelector((state: IRootStore) => state.document.colorMode);
 
   return (
     <>

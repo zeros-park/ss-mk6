@@ -1,5 +1,5 @@
 import { wrapper } from "@/store";
-import { colorMode, setColorMode } from "@/store/slice/layoutSlice";
+import { getColorModeOnServerSide, setColorMode } from "@/store/slice/documentSlice";
 import { GetServerSideProps } from "next";
 
 type onceInitStoreOnGSSP = (getServerSideProps?: GetServerSideProps) => GetServerSideProps;
@@ -12,12 +12,11 @@ type onceInitStoreOnGSSP = (getServerSideProps?: GetServerSideProps) => GetServe
  */
 const getOnceServerSideProps: onceInitStoreOnGSSP = (getServerSideProps?) => {
     return wrapper.getServerSideProps(({ dispatch }) => async (context) => {
-        console.log('zeros server !!')
         /**
          * sec-fetch-dest: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Sec-Fetch-Dest
          */
         if (context.req.headers['sec-fetch-dest'] === 'document') {
-            const mode: colorMode = (context.req.cookies['colorMode'] || 'system') as colorMode;
+            const mode = getColorModeOnServerSide(context.req.cookies);
             dispatch(setColorMode(mode))
         }
 

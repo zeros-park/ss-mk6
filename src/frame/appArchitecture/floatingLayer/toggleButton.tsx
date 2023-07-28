@@ -1,6 +1,6 @@
 import React, { ReactEventHandler, useState } from "react";
 import styled, { CSSObject } from 'styled-components';
-import FloatingLayer, { IDimdOptions, positionType } from "@/frame/floatingLayer/floatingLayer";
+import FloatingLayer, { IDimdOptions, positionType } from "@/frame/appArchitecture/floatingLayer/floatingLayer";
 import { IReactFC } from "@/types/global";
 
 interface IProps {
