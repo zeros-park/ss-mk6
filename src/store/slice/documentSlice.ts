@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
 import { NextApiRequestCookies } from 'next/dist/server/api-utils';
 
-export type colorMode = 'white' | 'dark' | 'system'
+export type colorMode = 'light' | 'dark' | 'system'
 export interface ISliceDocument {
   isCompleteFirstRender: boolean,
   colorMode: colorMode,
@@ -20,7 +20,7 @@ const initialState: ISliceDocument = {
   colorMode: "system",
 }
 export const documentSlice = createSlice({
-  name: 'cookie',
+  name: 'document',
   initialState,
   reducers: {
     isCompleteFirstRender: (state, actions: PayloadAction<boolean>) => {

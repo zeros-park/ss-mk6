@@ -5,7 +5,13 @@ import BlockItem from "@/content/blockItem";
 import Link from "next/link";
 import ToggleButton from "@/frame/appArchitecture/floatingLayer/toggleButton";
 import DimdLayerTestItem from "@/content/test-dimdLayer";
+import { dcwStyled } from "@/frame/designComponentWrapper";
 
+const Wrapper = styled.div`${() => dcwStyled(() => ({
+    darkMode: {
+        backgroundColor: 'gray'
+    }
+}))}`
 const LinkStyle = styled.span`${{
     textDecoration: 'underline',
     ":hover": {
@@ -15,7 +21,7 @@ const LinkStyle = styled.span`${{
 
 const AsideContent: IReactFC = () => {
     return (
-        <>
+        <Wrapper>
             <BlockItem text={'ai 1'}>
                 <Link href="/">
                     <LinkStyle>home</LinkStyle>
@@ -49,7 +55,7 @@ const AsideContent: IReactFC = () => {
             <BlockItem text={'ai 12'} />
             <BlockItem text={'ai 13'} />
             <div>end</div>
-        </>
+        </Wrapper>
     )
 }
 

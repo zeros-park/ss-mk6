@@ -3,7 +3,6 @@ import React from "react";
 import styled from 'styled-components';
 
 const Layout = styled.div`
-    background-color: #e1e1f9;
     padding: 10px 10px 10px 10px;
 `
 

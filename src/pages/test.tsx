@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import CounterTestItem from "@/content/test-counter";
 import DimdLayerTestItem from "@/content/test-dimdLayer";
 import DimdLayerLegacyTestItem from "@/content/test-dimdLayerLegacy";
+import { getOnceServerSideProps } from '@/frame/pagaWrapper/serverSideProps';
 import { useSelector } from 'react-redux';
 import { IRootStore } from '@/store';
-import { getOnceServerSideProps } from '@/frame/pagaWrapper/serverSideProps';
 
 
 interface mateImageList {
@@ -32,7 +32,6 @@ export const getServerSideProps = getOnceServerSideProps(async () => {
     }
   }
 });
-
 const Test: React.FC<{ metaImageList: mateImageList }> = ({ metaImageList }) => {
   const colorMode = useSelector((state: IRootStore) => state.document.colorMode);
 
