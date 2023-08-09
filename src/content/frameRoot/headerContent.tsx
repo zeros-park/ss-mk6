@@ -52,7 +52,7 @@ const HeaderContent: IReactFC = () => {
                 <FlexArea>
                     <Item>
                         <ToggleButton
-                            text={'영역 테스트 레이어 오픈'}
+                            text={'test'}
                             options={['center', 'default', true, '중앙/기본']}
                         >
                             <DimdLayerTestItem></DimdLayerTestItem>

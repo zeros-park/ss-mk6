@@ -19,13 +19,13 @@ export interface IStateLayout {
 const initialState: IStateLayout = {
   layout: {
     mediaWidthOptions: {
-      minimal: 300,
-      simple: 600,
+      simple: 750,
+      minimal: 450,
     },
     asideLeftSizeOptions: {
-      minimal: null,
-      simple: 60,
       default: 200,
+      simple: 80,
+      minimal: null,
     },
     headerHeightSize: 50,
   }
