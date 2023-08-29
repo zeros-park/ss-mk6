@@ -15,9 +15,15 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
   }
 
+  button {
+    color: inherit;
+    cursor : pointer;
+  }
+
   * {
     box-sizing: border-box;
   }
+  
 `
 
 export default GlobalStyle

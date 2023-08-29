@@ -6,11 +6,13 @@ import DimdLayerLegacyTestItem from "@/content/test-dimdLayerLegacy";
 import { getOnceServerSideProps } from '@/frame/pagaWrapper/serverSideProps';
 import { useSelector } from 'react-redux';
 import { IRootStore } from '@/store';
+import { useEffect, useState } from 'react';
 
 
 interface mateImageList {
   ogImage: string,
   twitterImage: string,
+  time: string,
 }
 const TestItem = styled.div`
     min-height: 150px;
@@ -23,17 +25,31 @@ const Content = styled.div`${{
 }}`
 
 export const getServerSideProps = getOnceServerSideProps(async () => {
+  const t = new Date()
   return {
     props: {
       metaImageList: {
         ogImage: 'https://ss-mk5.vercel.app/asset/img/testimg5.png',
         twitterImage: 'https://ss-mk5.vercel.app/asset/img/testimg6.png',
+        time: t.toString() + t.getMilliseconds()
       }
     }
   }
 });
 const Test: React.FC<{ metaImageList: mateImageList }> = ({ metaImageList }) => {
   const colorMode = useSelector((state: IRootStore) => state.document.colorMode);
+  const routerRefreshTrigger = useSelector((state: IRootStore) => state.document.routerRefreshTrigger)
+  const [clientTime, setClientTime] = useState('');
+
+  const init = () => {
+    const t = new Date();
+    setClientTime(t.toString() + t.getMilliseconds())
+  }
+
+  useEffect(() => {
+    init();
+  }, [routerRefreshTrigger])
+  // }, [])
 
   return (
     <>
@@ -52,6 +68,8 @@ const Test: React.FC<{ metaImageList: mateImageList }> = ({ metaImageList }) => 
       <Content>
         <TestItem>
           <>
+            <div>서버렌더링시간: {metaImageList.time}</div>
+            <div>클라이언트시간: {clientTime}</div>
             <div>store data check</div>
             <CounterTestItem />
             <div>layout -  colorMode: {colorMode}</div>

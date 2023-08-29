@@ -9,13 +9,13 @@ import { createWrapper, HYDRATE } from 'next-redux-wrapper';
 import document, { ISliceDocument } from '@/store/slice/documentSlice';
 import counter, { ICounterStatus } from '@/store/slice/counterSlice';
 import dimdLayer, { IDimdLayerStateLegacy } from '@/store/slice/dimdLayerLegacySlice';
-import layout, { IStateLayout } from '@/store/slice/frameSlice';
+import frame, { IStateLayout } from '@/store/slice/frameSlice';
 
 export interface IRootStore {
   document: ISliceDocument
   counter: ICounterStatus,
   dimdLayer: IDimdLayerStateLegacy,
-  layout: IStateLayout,
+  frame: IStateLayout,
 }
 
 // const store = configureStore<IRootStore>({
@@ -32,7 +32,7 @@ const rootReducer: appReducer = combineReducers<IRootStore>({
   document,
   counter,
   dimdLayer,
-  layout,
+  frame,
 })
 
 export const reducer: appReducer = (state, action) => {

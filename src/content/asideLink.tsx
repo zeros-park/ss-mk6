@@ -1,9 +1,11 @@
-import BlockItem from "@/content/blockItem";
 import { dcwStyled } from "@/frame/designComponentWrapper";
+import { IRootStore } from "@/store";
+import { updateRouterRefreshTrigger } from "@/store/slice/documentSlice";
+import { setAsideFlod } from "@/store/slice/frameSlice";
 import { IReactFC } from "@/types/global";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { MouseEventHandler } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from 'styled-components';
 
 const AsideWrapper = styled.div`
@@ -11,6 +13,9 @@ const AsideWrapper = styled.div`
 `
 interface metched {
     matched: boolean
+}
+interface tFlexed {
+    isFlexed: boolean
 }
 const AsideItem = styled.div<metched>`${({ matched }) => dcwStyled(() => ({
     default: {
@@ -34,58 +39,48 @@ const AsideIcon = styled.span<metched>`${({ matched }) => dcwStyled(() => ({
         width: 50,
     },
 }))}`
-const AsideMenu = styled.span`${() => dcwStyled(() => ({
+const AsideMenu = styled.span<tFlexed>`${({ isFlexed }) => dcwStyled(({ layout }) => ({
     default: {
         margin: '5px 5px 5px 5px',
         backgroundColor: '#e0fffa',
         border: '1px solid',
     },
-    simple: {
+    simple: (isFlexed === false) ? {} : {
         display: 'none'
-    }
+    },
 }))}`
-
-// const AsideItem = styled.div`
-//     margin: 5px 5px 5px 5px;
-// `
-// const AsideIcon = styled.span`${() => ({
-//     margin: '5px 5px 5px 5px',
-//     // display: 'inline-block',
-//     backgroundColor: '#e0fffa',
-//     border: '1px solid',
-//     width: 50,
-//     height: 50,
-// })}`
-// const AsideMenu = styled.span`${() => ({
-//     margin: '5px 5px 5px 5px',
-//     // display: 'inline-block',
-//     backgroundColor: '#e0fffa',
-//     border: '1px solid',
-//     height: 50,
-// })}`
 
 const AsideLink: IReactFC<{
     iconText: string,
     href: string,
     text: string,
+    isFlexed: boolean,
 }> = ({
     iconText,
     href,
-    text
+    text,
+    isFlexed,
 }) => {
-        const [matched, setMatched] = useState(false);
-        const router = useRouter();
+        const routerPathname = useSelector((state: IRootStore) => state.document.routerPathname);
+        const matched = (routerPathname === href);
+        const dispatch = useDispatch();
 
-        useEffect(() => {
-            setMatched((router.pathname === href))
-        }, [router.pathname])
+        const checkSameRouter: MouseEventHandler<HTMLAnchorElement> = (event) => {
+            if (matched) {
+                // event.preventDefault();
+                // alert('동일한 라우터로 실행이 되었음으로 확인함')
+                dispatch(updateRouterRefreshTrigger());
+            } else {
+                dispatch(setAsideFlod(true))
+            }
+        }
 
         return (
             <AsideWrapper>
-                <Link href={href}>
+                <Link href={href} onClick={checkSameRouter}>
                     <AsideItem matched={matched}>
                         <AsideIcon matched={matched}>{iconText}</AsideIcon>
-                        <AsideMenu>{text}</AsideMenu>
+                        <AsideMenu isFlexed={isFlexed}>{text}</AsideMenu>
                     </AsideItem>
                 </Link>
             </AsideWrapper>

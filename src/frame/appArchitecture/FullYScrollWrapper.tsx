@@ -5,22 +5,29 @@ import { dcwStyled } from "@/frame/designComponentWrapper";
 
 const Wrapper = styled.section`${() => dcwStyled(({ layout }) => ({
     default: {
+        pointerEvents: 'none',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
-        pointerEvents: 'none',
-        marginTop: `-${layout.headerHeightSize}px`,
     }
 }))}`
-const Content = styled.div`${() => dcwStyled(({ layout }) => ({
+const Content = styled.div`${() => dcwStyled(({ layout, colorSet }) => ({
     default: {
         pointerEvents: 'auto',
         marginTop: `${layout.headerHeightSize}px`,
         overflowY: 'auto'
-    }
+    },
+    darkMode: {
+        backgroundColor: colorSet.darkBG,
+        color: colorSet.darkFont
+    },
 }))}`
 
-const YScrollWrapper: IReactFC = ({ children }) => {
+const FullYScrollWrapper: IReactFC = ({ children }) => {
     return (
         <Wrapper>
             <Content>
@@ -30,4 +37,4 @@ const YScrollWrapper: IReactFC = ({ children }) => {
     );
 }
 
-export default YScrollWrapper;
+export default FullYScrollWrapper;

@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { IRootStore } from "@/store";
 import { Ilayout } from "@/store/slice/frameSlice";
-import { colorMode } from "@/store/slice/documentSlice";
+import { bgColorSet, colorMode } from "@/store/slice/documentSlice";
 import { CSSObject } from 'styled-components';
 
 export interface dcwPropsOnlyLayout {
@@ -10,7 +10,13 @@ export interface dcwPropsOnlyLayout {
 export interface dcwPropsOnlyColorMode {
     colorMode: colorMode
 }
-export interface dcwProps extends dcwPropsOnlyLayout, dcwPropsOnlyColorMode { }
+// export interface dcwProps extends dcwPropsOnlyLayout, dcwPropsOnlyColorMode { }
+
+export interface dcwProps {
+    layout: Ilayout,
+    colorMode: colorMode,
+    colorSet: bgColorSet
+}
 
 interface cssStyle {
     default?: CSSObject,
@@ -20,16 +26,18 @@ interface cssStyle {
     minimal?: CSSObject
 }
 
-type dcwStyled = (getDCWstyle: ({ layout, colorMode }: dcwProps) => cssStyle) => CSSObject;
+type dcwStyled = (getDCWstyle: ({ layout, colorMode, colorSet }: dcwProps) => cssStyle) => CSSObject;
 export const dcwStyled: dcwStyled = (getDCWstyle) => {
-    const layout = useSelector((state: IRootStore) => state.layout.layout);
+    const layout = useSelector((state: IRootStore) => state.frame.layout);
     const colorMode = useSelector((state: IRootStore) => state.document.colorMode);
+    const colorSet = useSelector((state: IRootStore) => state.document.colorSet);
 
-    return dcwStyledTransfomer(getDCWstyle({ layout, colorMode }))
+    return dcwStyledTransfomer(getDCWstyle({ layout, colorMode, colorSet }))
 }
 
 const dcwStyledTransfomer = (cssStyle: cssStyle) => {
-    const layout = useSelector((state: IRootStore) => state.layout.layout);
+    const layout = useSelector((state: IRootStore) => state.frame.layout);
+    const asideCustomize = useSelector((state: IRootStore) => state.frame.asideCustomize);
     const colorMode = useSelector((state: IRootStore) => state.document.colorMode);
 
     const expendedStyle = layout ? {
@@ -49,9 +57,17 @@ const dcwStyledTransfomer = (cssStyle: cssStyle) => {
         } : {}
     }
 
+    const cssUserCustomize = (asideCustomize === false) ? {} : (cssStyle.simple);
+
     return {
         ...(cssStyle.default || {}),
+        ...cssUserCustomize,
         ...expendedStyle,
         ...colorModeStyle
     }
+    // return {
+    //     ...(cssStyle.default || {}),
+    //     ...expendedStyle,
+    //     ...colorModeStyle
+    // }
 }

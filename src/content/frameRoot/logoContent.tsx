@@ -1,36 +1,58 @@
 import { IReactFC } from "@/types/global";
-import React from "react";
-import styled from 'styled-components';
-import ToggleButton from "@/frame/appArchitecture/floatingLayer/toggleButton";
-import DimdLayerTestItem from "@/content/test-dimdLayer";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { IRootStore } from "@/store";
+import { setAsideFlod, toggleAsideCustomize } from "@/store/slice/frameSlice";
+import FloatingLayer from "@/frame/appArchitecture/floatingLayer/floatingLayer";
+import LogoIcon from "@/content/logoIcon";
+import styled from "styled-components";
+import { dcwStyled } from "@/frame/designComponentWrapper";
+import AsideContent from "@/content/frameRoot/asideContent";
 
-const AsideSVG = styled.svg`
-    width: 30px;
-    height: 30px;
-    vertical-align: middle;
-`
+const LayerWrapper = styled.section`${() => dcwStyled(({ layout }) => ({
+    default: {
+        width: `${layout.asideLeftSizeOptions.default}px;`,
+        height: '100%',
+    },
+}))}`
 
 const LogoContent: IReactFC = () => {
+    const dispatch = useDispatch();
+    const currentLayout = useSelector((state: IRootStore) => state.frame.currentLayout);
+    const asideFlod = useSelector((state: IRootStore) => state.frame.asideFlod);
+    const [closeFlag, setCloseFlag] = useState(false);
+
+    const requestClose: React.MouseEventHandler<HTMLButtonElement> = (el) => {
+        setCloseFlag(true)
+    }
     const clickLogo: React.MouseEventHandler<HTMLButtonElement> = (el) => {
-        alert('oops aside!!')
+        setCloseFlag(false)
+
+        if (currentLayout === 'minimal') {
+            dispatch(setAsideFlod(asideFlod === false))
+        } else if (currentLayout === 'simple') {
+            dispatch(setAsideFlod(asideFlod === false))
+        } else {
+            dispatch(toggleAsideCustomize())
+        }
     }
 
     return (
         <>
-            <button onClick={clickLogo}>
-                <AsideSVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
-                    <rect x="0" y="6" width="30" height="2" rx="2" />
-                    <rect x="0" y="13" width="30" height="2" rx="2" />
-                    <rect x="0" y="20" width="30" height="2" rx="2" />
-                </AsideSVG>
-            </button>
-            <span>LOGO</span>
-            <ToggleButton
-                text={'test'}
-                options={['center', 'default', true, '중앙/기본']}
-            >
-                <DimdLayerTestItem></DimdLayerTestItem>
-            </ToggleButton>
+            <LogoIcon onClick={clickLogo}></LogoIcon>
+            {(asideFlod === false) &&
+                <FloatingLayer
+                    fireClose={() => dispatch(setAsideFlod(true))}
+                    options={['left', 'height', true, null]}
+                    closeFlag={closeFlag}
+                >
+                    <LayerWrapper>
+                        <AsideContent isFlexed={false}>
+                            <LogoIcon onClick={requestClose}></LogoIcon>
+                        </AsideContent>
+                    </LayerWrapper>
+                </FloatingLayer>
+            }
         </>
     )
 }

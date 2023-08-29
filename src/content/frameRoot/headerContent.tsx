@@ -9,7 +9,8 @@ import { setColorMode, colorMode } from "@/store/slice/documentSlice";
 import { dcwStyled } from "@/frame/designComponentWrapper";
 import { IRootStore } from "@/store";
 
-const Content = styled.div`${() => dcwStyled(() => ({
+
+const Content = styled.div`${() => dcwStyled(({ colorSet }) => ({
     default: {
         display: 'flex',
         alignItems: 'center',
@@ -17,11 +18,10 @@ const Content = styled.div`${() => dcwStyled(() => ({
         height: '100%',
     },
     darkMode: {
-        backgroundColor: 'gray',
+        backgroundColor: colorSet.darkBG,
+        color: colorSet.darkFont
     },
-    lightMode: {
-        backgroundColor: 'yellow',
-    }
+
 }))}`
 const FlexArea = styled.div`
 `

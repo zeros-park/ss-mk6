@@ -13,13 +13,13 @@ const Wrapper = styled.section`${() => dcwStyled(({ layout }) => ({
         pointerEvents: 'none',
     }
 }))}`
-const Content = styled.div`${() => dcwStyled(({ layout }) => ({
+const Content = styled.div`${() => dcwStyled(({ layout, colorSet }) => ({
     default: {
         position: 'relative',
         pointerEvents: 'auto',
         marginLeft: `${layout.asideLeftSizeOptions.default}px`,
         height: '100%',
-    }
+    },
 }))}`
 const Header: IReactFC = ({ children }) => {
     return (

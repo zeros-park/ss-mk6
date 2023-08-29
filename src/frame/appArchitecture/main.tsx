@@ -1,11 +1,11 @@
 import React from "react";
 import styled from 'styled-components';
 import { IReactFC } from "@/types/global";
-import YScrollWrapper from "@/frame/appArchitecture/YScrollWrapper";
+import FullYScrollWrapper from "@/frame/appArchitecture/FullYScrollWrapper";
 import { dcwStyled } from "@/frame/designComponentWrapper";
 
 const Wrapper = styled.section`${{
-    position: "absolute",
+    position: 'absolute',
     pointerEvents: 'none',
     top: 0,
     left: 0,
@@ -17,7 +17,6 @@ const Content = styled.main`${() => dcwStyled(({ layout }) => ({
         position: 'relative',
         height: '100%',
         marginLeft: `${layout.asideLeftSizeOptions.default}px`,
-        marginTop: `${layout.headerHeightSize}px`,
     },
     simple: {
         marginLeft: `${layout.asideLeftSizeOptions.simple}px`
@@ -30,9 +29,9 @@ const Main: IReactFC = ({ children }) => {
     return (
         <Wrapper>
             <Content>
-                <YScrollWrapper>
+                <FullYScrollWrapper>
                     {children}
-                </YScrollWrapper>
+                </FullYScrollWrapper>
             </Content>
         </Wrapper>
     );
