@@ -225,11 +225,11 @@ const WrapperHeader = styled.div<IDimdStyled>`
 const HideElementForFocusControll = styled.a``
 
 const FloatingLayer: IReactFC<{
-    fireClose: () => void,
+    afterClosed: () => void,
     options: IDimdOptions | positionType,
     closeFlag?: boolean,
 }> = ({
-    fireClose,
+    afterClosed,
     options,
     closeFlag = false,
     children
@@ -267,7 +267,7 @@ const FloatingLayer: IReactFC<{
             event.stopPropagation();
 
             if (isShowContent === false) {
-                fireClose();
+                afterClosed();
             }
         }
 

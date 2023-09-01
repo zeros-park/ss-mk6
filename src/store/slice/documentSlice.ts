@@ -27,8 +27,8 @@ const initialState: ISliceDocument = {
   colorSet: {
     lightBG: 'white',
     lightFont: 'black',
-    darkBG: '#767676',
-    darkFont: '#d98f77',
+    darkBG: '#363434',
+    darkFont: '#939393',
   },
   routerPathname: '',
   routerRefreshTrigger: 0,

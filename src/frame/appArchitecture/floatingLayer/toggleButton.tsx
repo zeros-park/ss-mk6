@@ -44,7 +44,7 @@ const ToggleButton: IReactFC<{
                 </Button>
                 {isShow &&
                     <FloatingLayer
-                        fireClose={() => setIsShow(false)}
+                        afterClosed={() => setIsShow(false)}
                         options={options}
                     >
                         {children}

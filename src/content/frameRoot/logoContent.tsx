@@ -1,5 +1,5 @@
 import { IReactFC } from "@/types/global";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootStore } from "@/store";
 import { setAsideFlod, toggleAsideCustomize } from "@/store/slice/frameSlice";
@@ -20,31 +20,40 @@ const LogoContent: IReactFC = () => {
     const dispatch = useDispatch();
     const currentLayout = useSelector((state: IRootStore) => state.frame.currentLayout);
     const asideFlod = useSelector((state: IRootStore) => state.frame.asideFlod);
-    const [closeFlag, setCloseFlag] = useState(false);
+    const [floatingLayerCloseFlag, setFloatingLayerCloseFlag] = useState(false);
+    const [isShowAsideLayer, setIsShowAsideLayer] = useState(false);
 
     const requestClose: React.MouseEventHandler<HTMLButtonElement> = (el) => {
-        setCloseFlag(true)
+        setFloatingLayerCloseFlag(true)
     }
-    const clickLogo: React.MouseEventHandler<HTMLButtonElement> = (el) => {
-        setCloseFlag(false)
+    const openLayer: React.MouseEventHandler<HTMLButtonElement> = (el) => {
+        setFloatingLayerCloseFlag(false)
 
         if (currentLayout === 'minimal') {
-            dispatch(setAsideFlod(asideFlod === false))
+            setIsShowAsideLayer(isShowAsideLayer === false)
+            dispatch(setAsideFlod(false))
         } else if (currentLayout === 'simple') {
-            dispatch(setAsideFlod(asideFlod === false))
+            setIsShowAsideLayer(isShowAsideLayer === false)
+            dispatch(setAsideFlod(false))
         } else {
             dispatch(toggleAsideCustomize())
         }
     }
 
+    useEffect(() => {
+        if (asideFlod === true) {
+            setFloatingLayerCloseFlag(true)
+        }
+    }, [asideFlod])
+
     return (
         <>
-            <LogoIcon onClick={clickLogo}></LogoIcon>
-            {(asideFlod === false) &&
+            <LogoIcon onClick={openLayer}></LogoIcon>
+            {(isShowAsideLayer === true) &&
                 <FloatingLayer
-                    fireClose={() => dispatch(setAsideFlod(true))}
+                    closeFlag={floatingLayerCloseFlag}
+                    afterClosed={() => setIsShowAsideLayer(false)}
                     options={['left', 'height', true, null]}
-                    closeFlag={closeFlag}
                 >
                     <LayerWrapper>
                         <AsideContent isFlexed={false}>

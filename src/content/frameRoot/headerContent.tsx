@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setColorMode, colorMode } from "@/store/slice/documentSlice";
 import { dcwStyled } from "@/frame/designComponentWrapper";
 import { IRootStore } from "@/store";
+import SearchContent from "@/content/searchContent";
 
 
 const Content = styled.div`${() => dcwStyled(({ colorSet }) => ({
@@ -16,6 +17,9 @@ const Content = styled.div`${() => dcwStyled(({ colorSet }) => ({
         alignItems: 'center',
         justifyContent: 'space-between',
         height: '100%',
+    },
+    minimal: {
+        justifyContent: 'end',
     },
     darkMode: {
         backgroundColor: colorSet.darkBG,
@@ -47,7 +51,7 @@ const HeaderContent: IReactFC = () => {
         <>
             <Content>
                 <FlexArea>
-                    <CounterTestItem></CounterTestItem>
+                    <SearchContent></SearchContent>
                 </FlexArea>
                 <FlexArea>
                     <Item>
