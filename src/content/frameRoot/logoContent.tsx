@@ -3,11 +3,12 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootStore } from "@/store";
 import { setAsideFlod, toggleAsideCustomize } from "@/store/slice/frameSlice";
-import FloatingLayer from "@/frame/appArchitecture/floatingLayer/floatingLayer";
+// import FloatingLayer from "@/frame/appArchitecture/floatingLayer/floatingLayer";
+import FloatingLayerV2 from "@/frame/appArchitecture/floatingLayer/floatingLayerV2";
 import LogoIcon from "@/content/logoIcon";
 import styled from "styled-components";
 import { dcwStyled } from "@/frame/designComponentWrapper";
-import AsideContent from "@/content/frameRoot/asideContent";
+import Aside from "@/frame/appArchitecture/aside";
 
 const LayerWrapper = styled.section`${() => dcwStyled(({ layout }) => ({
     default: {
@@ -15,6 +16,36 @@ const LayerWrapper = styled.section`${() => dcwStyled(({ layout }) => ({
         height: '100%',
     },
 }))}`
+
+const Wrapper = styled.section`${() => dcwStyled(({ layout, colorSet }) => ({
+    default: {
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden',
+        pointerEvents: 'none',
+    },
+}))}`
+const VirtualArea = styled.section`${() => dcwStyled(({ layout }) => ({
+    default: {
+        pointerEvents: 'none',
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        paddingBottom: layout.headerHeightSize
+    },
+}))}`
+const ScrolledArea = styled.section<{ isShowScrollbar: boolean }>`${({ isShowScrollbar }) => ({
+    // pointerEvents: 'none',
+    overflowX: 'hidden',
+    overflowY: 'auto',
+    height: '100%',
+    ['&::-webkit-scrollbar']: {
+        display: `${isShowScrollbar ? 'auto' : 'none'}`
+    }
+})}`
 
 const LogoContent: IReactFC = () => {
     const dispatch = useDispatch();
@@ -50,17 +81,27 @@ const LogoContent: IReactFC = () => {
         <>
             <LogoIcon onClick={openLayer}></LogoIcon>
             {(isShowAsideLayer === true) &&
-                <FloatingLayer
+                <FloatingLayerV2
                     closeFlag={floatingLayerCloseFlag}
                     afterClosed={() => setIsShowAsideLayer(false)}
-                    options={['left', 'height', true, null]}
+                    // options={['left', 'height', true, null]}
+                    options={['left', 'full', true, null]}
                 >
                     <LayerWrapper>
-                        <AsideContent isFlexed={false}>
-                            <LogoIcon onClick={requestClose}></LogoIcon>
-                        </AsideContent>
+                        <Wrapper>
+                            <section>
+                                <LogoIcon onClick={requestClose}></LogoIcon>
+                            </section>
+                            <section>
+                                <VirtualArea>
+                                    <ScrolledArea isShowScrollbar={false}>
+                                        <Aside isFlexed={false}></Aside>
+                                    </ScrolledArea>
+                                </VirtualArea>
+                            </section>
+                        </Wrapper>
                     </LayerWrapper>
-                </FloatingLayer>
+                </FloatingLayerV2>
             }
         </>
     )

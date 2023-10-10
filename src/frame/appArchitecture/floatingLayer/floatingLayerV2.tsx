@@ -1,3 +1,4 @@
+import ToggleButton from "@/frame/appArchitecture/floatingLayer/toggleButton";
 import { dcwStyled } from "@/frame/designComponentWrapper";
 import { IReactFC } from "@/types/global";
 import React, { useState, useRef, useEffect } from "react";
@@ -176,6 +177,7 @@ const Content = styled.div<IDimdStyled>`${({ options }) => dcwStyled(({ colorSet
         default: {
             ...{
                 position: 'relative',
+                pointerEvents: 'none',
                 width: `${options.extendType === 'full' ? '100%' : 'auto'}`,
                 height: `${options.extendType === 'full' ? '100%' : 'auto'}`,
                 transitionDuration: `${options.isDirectShow ? '1ms' : '200ms'}`,
@@ -184,12 +186,12 @@ const Content = styled.div<IDimdStyled>`${({ options }) => dcwStyled(({ colorSet
             },
             ...extendedAttr
         },
-        lightMode: {
-            backgroundColor: colorSet.lightBG
-        },
-        darkMode: {
-            backgroundColor: colorSet.darkBG
-        }
+        // lightMode: {
+        //     backgroundColor: colorSet.lightBG
+        // },
+        // darkMode: {
+        //     backgroundColor: colorSet.darkBG
+        // }
     }
 })}
 
@@ -207,7 +209,6 @@ const Layer = styled.div`${() => dcwStyled(({ colorSet }) => ({
 const WrapperHeader = styled.div<IDimdStyled>`
     display: flex;
     align-items: center;
-    min-width: 190px;
     ${props => {
         switch (props.options.positionType) {
             case 'left': return (`
@@ -225,7 +226,7 @@ const WrapperHeader = styled.div<IDimdStyled>`
 `
 const HideElementForFocusControll = styled.a``
 
-const FloatingLayer: IReactFC<{
+const FloatingLayerV2: IReactFC<{
     afterClosed: () => void,
     options: IDimdOptions | positionType,
     closeFlag?: boolean,
@@ -341,4 +342,4 @@ const FloatingLayer: IReactFC<{
             </Dimd >
         );
     }
-export default FloatingLayer;
+export default FloatingLayerV2;

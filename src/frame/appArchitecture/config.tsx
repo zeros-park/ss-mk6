@@ -30,6 +30,10 @@ const Config: IReactFC = () => {
             debounce(updateLayout, 300)
         };
 
+        const scrolled = () => {
+            console.log('zeros, scroll!!')
+        }
+
         updateLayout();
         // resize 이벤트 리스너 추가
         window.addEventListener('resize', handleResize);

@@ -6,9 +6,9 @@ export type Ilayout = {
     simple: number,
   },
   asideLeftSizeOptions: {
-    minimal: null,
-    simple: number,
     default: number,
+    simple: number,
+    minimal: number,
   },
   headerHeightSize: number,
 }
@@ -29,7 +29,7 @@ const initialState: IStateLayout = {
     asideLeftSizeOptions: {
       default: 200,
       simple: 80,
-      minimal: null,
+      minimal: 0,
     },
     headerHeightSize: 50,
   },

@@ -6,12 +6,20 @@ import React from "react";
 import styled from 'styled-components';
 
 
-const Content = styled.div`${() => dcwStyled(({ layout }) => ({
+const Content = styled.span`${() => dcwStyled(({ layout, colorSet }) => ({
     default: {
         position: 'relative',
+        pointerEvents: 'auto',
         height: `${layout.headerHeightSize}px`,
+        width: `${layout.asideLeftSizeOptions.default}px`,
         display: 'flex',
         alignItems: 'center',
+    },
+    lightMode: {
+        backgroundColor: colorSet.lightBG
+    },
+    darkMode: {
+        backgroundColor: colorSet.darkBG
     }
 }))}`
 const Logo = styled.span`${() => dcwStyled(() => ({

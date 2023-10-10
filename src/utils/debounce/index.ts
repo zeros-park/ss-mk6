@@ -5,6 +5,7 @@ let timer: Timer;
 
 const debounce: tDebounce = (callback, debouncedTime = 200) => {
     if (timer) {
+        console.log('zeros, is real debounce?')
         clearTimeout(timer);
     }
     timer = setTimeout(() => {

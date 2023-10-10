@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from 'styled-components';
 
 const AsideWrapper = styled.div`
-    margin: 5px 5px 5px 5px;
+    padding: 5px 5px 5px 5px;
 `
 interface metched {
     matched: boolean
@@ -23,9 +23,7 @@ const AsideItem = styled.div<metched>`${({ matched }) => dcwStyled(() => ({
         alignItems: 'center',
         justifyContent: 'start',
         backgroundColor: `${matched ? '#e2e0e0' : ''}`,
-        height: 40,
-        margin: '5px 5px 5px 5px',
-        ":hover": {
+        [":hover"]: {
             backgroundColor: '#cdcbcb',
         },
         borderRadius: 7,
@@ -35,8 +33,7 @@ const AsideIcon = styled.span<metched>`${({ matched }) => dcwStyled(() => ({
     default: {
         margin: '5px 5px 5px 5px',
         backgroundColor: `${matched ? '#b6c1fa' : '#e0fffa'}`,
-        border: '1px solid',
-        width: 50,
+        border: '1px solid'
     },
 }))}`
 const AsideMenu = styled.span<tFlexed>`${({ isFlexed }) => dcwStyled(({ layout }) => ({

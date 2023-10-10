@@ -2,11 +2,11 @@ import Head from 'next/head'
 import styled from 'styled-components';
 import CounterTestItem from "@/content/test-counter";
 import DimdLayerTestItem from "@/content/test-dimdLayer";
-import DimdLayerLegacyTestItem from "@/content/test-dimdLayerLegacy";
 import { getOnceServerSideProps } from '@/frame/pagaWrapper/serverSideProps';
 import { useSelector } from 'react-redux';
 import { IRootStore } from '@/store';
 import { useEffect, useState } from 'react';
+import SearchContent from '@/content/searchContent';
 
 
 interface mateImageList {
@@ -79,9 +79,8 @@ const Test: React.FC<{ metaImageList: mateImageList }> = ({ metaImageList }) => 
           <DimdLayerTestItem></DimdLayerTestItem>
         </TestItem>
         <TestItem>
-          <DimdLayerLegacyTestItem></DimdLayerLegacyTestItem>
+          <SearchContent></SearchContent>
         </TestItem>
-        <TestItem>Main1</TestItem>
         <TestItem>Main2</TestItem>
         <TestItem>Main3</TestItem>
         <TestItem>Main4</TestItem>

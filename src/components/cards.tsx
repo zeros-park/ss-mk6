@@ -42,7 +42,7 @@ export default function Cards() {
   return (
     <FlexContainer>
       <Card>
-        <StyledLink href="/about" name="About Page &rarr;" />
+        <StyledLink href="/test" name="Test Page &rarr;" />
       </Card>
     </FlexContainer>
   )

@@ -4,27 +4,30 @@ import { IReactFC } from "@/types/global";
 import { dcwStyled } from "@/frame/designComponentWrapper";
 import AsideContent from "@/content/frameRoot/asideContent";
 
-const Wrapper = styled.section`${() => dcwStyled(({ layout }) => ({
+const Wrapper = styled.section<{ isFlexed: boolean }>`${({ isFlexed }) => dcwStyled(({ layout, colorSet }) => ({
     default: {
-        position: 'absolute',
-        pointerEvents: 'none',
-        top: 0,
-        left: 0,
+        pointerEvents: 'auto',
+        position: 'relative',
         width: `${layout.asideLeftSizeOptions.default}px;`,
-        height: '100%',
     },
-    simple: {
+    simple: (isFlexed === false) ? {} : {
         width: `${layout.asideLeftSizeOptions.simple}px`
     },
-    minimal: {
+    minimal: (isFlexed === false) ? {} : {
         display: 'none'
     },
+    lightMode: {
+        backgroundColor: colorSet.lightBG
+    },
+    darkMode: {
+        backgroundColor: colorSet.darkBG
+    }
 }))}`
 
-const Aside: IReactFC = () => {
+const Aside: IReactFC<{ isFlexed?: boolean }> = ({ isFlexed = true }) => {
     return (
-        <Wrapper>
-            <AsideContent></AsideContent>
+        <Wrapper isFlexed={isFlexed}>
+            <AsideContent isFlexed={isFlexed}></AsideContent>
         </Wrapper>
     );
 }

@@ -1,7 +1,6 @@
 import { IReactFC } from "@/types/global";
 import React from "react";
 import styled, { CSSObject } from 'styled-components';
-import CounterTestItem from "@/content/test-counter";
 import ToggleButton from "@/frame/appArchitecture/floatingLayer/toggleButton";
 import DimdLayerTestItem from "@/content/test-dimdLayer";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,7 +8,6 @@ import { setColorMode, colorMode } from "@/store/slice/documentSlice";
 import { dcwStyled } from "@/frame/designComponentWrapper";
 import { IRootStore } from "@/store";
 import SearchContent from "@/content/searchContent";
-
 
 const Content = styled.div`${() => dcwStyled(({ colorSet }) => ({
     default: {
@@ -20,19 +18,18 @@ const Content = styled.div`${() => dcwStyled(({ colorSet }) => ({
     },
     minimal: {
         justifyContent: 'end',
-    },
-    darkMode: {
-        backgroundColor: colorSet.darkBG,
-        color: colorSet.darkFont
-    },
-
+    }
 }))}`
-const FlexArea = styled.div`
+const FlexArea = styled.div`${() => ({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+})}
 `
-const Item = styled.span`
-    padding: 5px 5px 5px 5px;
-    margin: 5px 5px 5px 5px;
-    background: #ffffff;
+const Item = styled.span`${() => ({
+    padding: '5px 5px 5px 5px',
+    background: '#ffffff'
+})}
 `
 const focused: CSSObject = {
     backgroundColor: 'gray',
@@ -61,6 +58,8 @@ const HeaderContent: IReactFC = () => {
                         >
                             <DimdLayerTestItem></DimdLayerTestItem>
                         </ToggleButton>
+                    </Item>
+                    <Item>
                         <ToggleButton
                             options="center"
                             text={colorMode + '모드'}
@@ -93,6 +92,7 @@ const HeaderContent: IReactFC = () => {
                                 </div>
                             </div>
                         </ToggleButton>
+
                     </Item>
                     <Item>
                         <span>Auth</span>

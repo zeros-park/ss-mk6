@@ -2,6 +2,7 @@ import React, { ReactEventHandler, useState } from "react";
 import styled, { CSSObject } from 'styled-components';
 import FloatingLayer, { IDimdOptions, positionType } from "@/frame/appArchitecture/floatingLayer/floatingLayer";
 import { IReactFC } from "@/types/global";
+import MouseoverInfo from "@/content/mouseoverInfo";
 
 interface IProps {
     options: {
@@ -36,12 +37,21 @@ const ToggleButton: IReactFC<{
 
         return (
             <span>
-                <Button
+                {/* <Button
                     onClick={setButtonState}
                     options={{ styled, isShow, styledFocus }}
                 >
                     {text}
-                </Button>
+                </Button> */}
+                {/* <MouseoverInfo text={`안내: ${text} 12345678901234567890123456789012345678901234567890123456789012345678901234567890`}> */}
+                <MouseoverInfo text={`${text}`}>
+                    <Button
+                        onClick={setButtonState}
+                        options={{ styled, isShow, styledFocus }}
+                    >
+                        {text}
+                    </Button>
+                </MouseoverInfo>
                 {isShow &&
                     <FloatingLayer
                         afterClosed={() => setIsShow(false)}
