@@ -3,6 +3,7 @@
 1. https://github.com/vercel/next.js/tree/canary/examples/with-styled-components
 
 위 가이드에서 제공하는 세팅을 참고해서 진행함.
+ex> `npx create-next-app --example with-styled-components {생성될 디렉토리/프로젝트 이름}`
 
 ---
 
