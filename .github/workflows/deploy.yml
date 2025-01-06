@@ -1,0 +1,41 @@
+name: Deploy to WSL2 K3s
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 코드를 체크아웃
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2. SSH 키 설정
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.HOME_SSH_PRIVATE }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          echo "StrictHostKeyChecking no" >> ~/.ssh/config
+
+      # 3. 홈서버에 접속하여 배포 스크립트 실행
+      - name: Deploy to K3s on WSL2
+        run: |
+          ssh asid17@121.137.133.130 << 'EOF'
+            # 홈서버의 프로젝트 경로로 이동
+            cd /home/asid17/workspaces/ss-mk6
+
+            # 최신 코드 풀링
+            git pull origin main
+
+            # Next.js 빌드 및 Docker 이미지 생성
+            # docker build -t nextjs-app:latest .
+
+            # K3s에 배포
+            # kubectl delete deployment nextjs-deployment || true
+            # kubectl apply -f k8s-deployment.yml
+          EOF
