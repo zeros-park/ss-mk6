@@ -18,7 +18,7 @@ jobs:
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.TES_TOK }}" > ~/.ssh/id_rsa_github_actions
+          echo "${{ secrets.PERSONAL_ACCESS_TOKEN }}" > ~/.ssh/id_rsa_github_actions
           chmod 600 ~/.ssh/id_rsa_github_actions
           echo "StrictHostKeyChecking no" >> ~/.ssh/config
           ls -la ~/.ssh
