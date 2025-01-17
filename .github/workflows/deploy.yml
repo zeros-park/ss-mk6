@@ -21,7 +21,7 @@ jobs:
           echo "${{ secrets.HOME_SSH_PRIVATE }}" > ~/.ssh/id_rsa_github_actions
           chmod 600 ~/.ssh/id_rsa_github_actions
           echo "StrictHostKeyChecking no" >> ~/.ssh/config
-          cd ~/.ssh | ls
+          cat ~/.ssh/config
 
       # 3. 홈서버에 접속하여 배포 스크립트 실행
       - name: Deploy to K3s on WSL2
