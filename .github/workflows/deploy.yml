@@ -18,14 +18,14 @@ jobs:
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.HOME_SSH_PRIVATE }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
+          echo "${{ secrets.HOME_SSH_PRIVATE }}" > ~/.ssh/id_rsa_github_actions
+          chmod 600 ~/.ssh/id_rsa_github_actions
           echo "StrictHostKeyChecking no" >> ~/.ssh/config
 
       # 3. 홈서버에 접속하여 배포 스크립트 실행
       - name: Deploy to K3s on WSL2
         run: |
-          ssh asid17@121.137.133.130 << 'EOF'
+          ssh -i ~/.ssh/id_rsa_github_actions asid17@121.137.133.130 << 'EOF'
             # 홈서버의 프로젝트 경로로 이동
             cd /home/asid17/workspaces/ss-mk6
 
