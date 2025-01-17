@@ -18,9 +18,11 @@ jobs:
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.HOME_SSH_PRIVATE }}" > ~/.ssh/id_rsa_github_actions
+          echo "${{ secrets.TES_TOK }}" > ~/.ssh/id_rsa_github_actions
           chmod 600 ~/.ssh/id_rsa_github_actions
           echo "StrictHostKeyChecking no" >> ~/.ssh/config
+          ls -la ~/.ssh
+          cat ~/.ssh/id_rsa_github_actions
 
       # 3. 홈서버에 접속하여 배포 스크립트 실행
       - name: Deploy to K3s on WSL2
@@ -41,5 +43,3 @@ jobs:
             # kubectl delete deployment nextjs-deployment || true
             # kubectl apply -f k8s-deployment.yml
           EOF
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.HOME_SSH_PRIVATE }}
