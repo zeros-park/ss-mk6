@@ -18,7 +18,7 @@ jobs:
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.PERSONAL_ACCESS_TOKEN }}" > ~/.ssh/id_rsa_github_actions
+          echo "${{ secrets.TES_TOK }}" > ~/.ssh/id_rsa_github_actions
           chmod 600 ~/.ssh/id_rsa_github_actions
           echo "StrictHostKeyChecking no" >> ~/.ssh/config
           ls -la ~/.ssh
@@ -28,6 +28,7 @@ jobs:
       - name: Deploy to K3s on WSL2
         run: |
           ssh -i ~/.ssh/id_rsa_github_actions asid17@121.137.133.130 << 'EOF'
+            echo 'hihi'
             # 홈서버의 프로젝트 경로로 이동
             cd /home/asid17/workspaces/ss-mk6
 
